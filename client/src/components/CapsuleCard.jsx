@@ -75,7 +75,7 @@ const CapsuleCard = ({ capsule }) => {
         </div>
 
         <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400">
-          Unlock Date: {format(new Date(capsule.unlockDate), 'MMM d, yyyy')}
+          Unlock Date: {format(new Date(capsule.unlockDate), 'MMM d, yyyy h:mm aa')}
         </div>
       </div>
     </Link>
