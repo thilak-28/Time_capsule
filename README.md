@@ -116,28 +116,37 @@ Inside the `server/` folder, create a new file called `.env` (no extension):
 # Server
 PORT=5000
 NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
 
 # MongoDB
 MONGO_URI=mongodb://localhost:27017/capsule
 
-# JWT Secrets (make these long random strings)
-JWT_ACCESS_SECRET=your_super_secret_access_key_here
-JWT_REFRESH_SECRET=your_super_secret_refresh_key_here
+# JWT Secrets
+# Generate these using: node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+# Run that command TWICE — use one for ACCESS and one for REFRESH
+JWT_ACCESS_SECRET=paste_your_generated_secret_here
+JWT_REFRESH_SECRET=paste_your_other_generated_secret_here
 JWT_ACCESS_EXPIRE=15m
 JWT_REFRESH_EXPIRE=7d
 
 # ✉️ Email Settings (Brevo API)
+SMTP_HOST=smtp-relay.brevo.com
+SMTP_PORT=587
 SMTP_USER=your_gmail@gmail.com
 SMTP_PASS=xkeysib-your-brevo-api-key-here
 EMAIL_FROM=your_gmail@gmail.com
 
-# ☁️ Cloudinary Settings
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+# ☁️ Cloudinary Settings (OPTIONAL — only for media uploads)
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
-> 📝 Replace all `your_...` values with your actual keys from Step 4.
+> 💡 **How to generate JWT Secrets**: Open any terminal and run this command **twice** to get two unique secrets:
+> ```bash
+> node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+> ```
+> Copy the first output into `JWT_ACCESS_SECRET` and the second into `JWT_REFRESH_SECRET`.
 
 ---
 
