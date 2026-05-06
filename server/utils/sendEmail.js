@@ -5,7 +5,13 @@ const nodemailer = require('nodemailer');
 const sendEmail = async (options) => {
   // 1. ALWAYS Save a local copy so you can SEE it's real!
   const fileName = `email_${Date.now()}.html`;
-  const filePath = path.join(__dirname, '../delivered_emails', fileName);
+  const deliveryDir = path.join(__dirname, '../delivered_emails');
+  const filePath = path.join(deliveryDir, fileName);
+  
+  // Auto-create the folder if it doesn't exist (important for fresh clones)
+  if (!fs.existsSync(deliveryDir)) {
+    fs.mkdirSync(deliveryDir, { recursive: true });
+  }
   
   const debugContent = `
     <h1>CAPSULE DELIVERED</h1>
