@@ -19,6 +19,22 @@ A full-stack **MERN** application that allows users to create, seal, and schedul
 
 ---
 
+## How it Works
+
+The Digital Time Capsule follows a precise lifecycle to ensure your memories are delivered exactly when you intended.
+
+1. **Creation**: Compose your message and attach media. This is saved as a **Draft**.
+2. **Sealing**: Once you "Seal" a capsule, its content becomes immutable. It is now time-locked and cannot be opened by anyone (including you) until the unlock date.
+3. **Background Monitoring**: The server runs a background process (Cron Job) every minute. It scans the database for any sealed capsules whose unlock date has passed.
+4. **Delivery**: When a capsule reaches its unlock time, the server automatically:
+    - Sends the content to all recipient inboxes via the Brevo API.
+    - Creates an in-app notification for the recipients.
+    - Marks the capsule as "Delivered."
+
+> **Note on Local Development**: Since the delivery logic runs on your computer, the server (`npm run dev`) must be active for emails to be sent. If your computer is off at the exact unlock time, the server will catch up and send all "missed" emails as soon as you restart it.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
