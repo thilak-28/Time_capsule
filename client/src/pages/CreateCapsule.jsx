@@ -81,7 +81,9 @@ const CreateCapsule = () => {
     } finally {
       setLoading(false);
     }
-   return (
+  };
+
+  return (
     <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in">
       {/* Header */}
       <div className="flex items-center justify-between">
