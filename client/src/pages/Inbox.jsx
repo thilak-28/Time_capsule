@@ -31,25 +31,25 @@ const Inbox = () => {
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Inbox</h1>
-        <p className="text-slate-500 dark:text-slate-400">Messages sent to you from the past</p>
+    <div className="space-y-10 stagger-in">
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold text-white tracking-tight">Received Capsules</h1>
+        <p className="text-white/45 font-medium">Echoes from the past that have reached you.</p>
       </div>
 
       {capsules.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {capsules.map((capsule) => (
             <CapsuleCard key={capsule._id} capsule={capsule} />
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 glass rounded-3xl">
-          <div className="inline-flex p-4 bg-primary-100 dark:bg-primary-900/30 rounded-full mb-4">
-            <InboxIcon className="w-8 h-8 text-primary-600" />
+        <div className="text-center py-24 glass rounded-[40px] border-white/5 bg-white/[0.02]">
+          <div className="inline-flex p-6 bg-accent-purple/10 border border-accent-purple/20 rounded-3xl mb-6 shadow-2xl shadow-accent-purple/5">
+            <InboxIcon className="w-10 h-10 text-accent-purple" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white">Your inbox is empty</h3>
-          <p className="text-slate-500 dark:text-slate-400">You haven't received any capsules yet.</p>
+          <h3 className="text-2xl font-bold text-white tracking-tight">Quiet Horizons</h3>
+          <p className="text-white/30 mt-2 font-medium max-w-xs mx-auto">No capsules have arrived for you yet. They might still be drifting through time.</p>
         </div>
       )}
     </div>
