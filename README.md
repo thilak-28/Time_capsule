@@ -6,20 +6,20 @@ A full-stack **MERN** application that lets users create, seal, and schedule dig
 
 ---
 
-## Features
+## <img src="https://unpkg.com/lucide-static@latest/icons/zap.svg" width="20" height="20" /> Features
 
-- **Secure Time-Locking** — Messages are sealed and hidden until the chosen unlock date.
-- **Real Email Delivery** — Powered by the Brevo API; emails land in real inboxes automatically.
-- **In-App Notifications** — Bell icon alerts when a capsule is delivered.
-- **Premium UI** — Glassmorphism aesthetic built with Tailwind CSS v4 and Lucide Icons.
-- **Multimedia Support** — Attach photos, videos, and audio via Cloudinary.
-- **Automated Scheduler** — Background cron job checks every minute and triggers delivery.
-- **JWT Auth** — Secure login and signup with Access and Refresh token management.
-- **Multiple Recipients** — Send a capsule to multiple email addresses at once.
+- <img src="https://unpkg.com/lucide-static@latest/icons/lock.svg" width="14" height="14" /> **Secure Time-Locking** — Messages are sealed and hidden until the chosen unlock date.
+- <img src="https://unpkg.com/lucide-static@latest/icons/mail.svg" width="14" height="14" /> **Real Email Delivery** — Powered by the Brevo API; emails land in real inboxes automatically.
+- <img src="https://unpkg.com/lucide-static@latest/icons/bell.svg" width="14" height="14" /> **In-App Notifications** — Bell icon alerts when a capsule is delivered.
+- <img src="https://unpkg.com/lucide-static@latest/icons/sparkles.svg" width="14" height="14" /> **Premium UI** — Glassmorphism aesthetic built with Tailwind CSS v4 and Lucide Icons.
+- <img src="https://unpkg.com/lucide-static@latest/icons/paperclip.svg" width="14" height="14" /> **Multimedia Support** — Attach photos, videos, and audio via Cloudinary.
+- <img src="https://unpkg.com/lucide-static@latest/icons/clock.svg" width="14" height="14" /> **Automated Scheduler** — Background cron job checks every minute and triggers delivery.
+- <img src="https://unpkg.com/lucide-static@latest/icons/shield-check.svg" width="14" height="14" /> **JWT Auth** — Secure login and signup with Access and Refresh token management.
+- <img src="https://unpkg.com/lucide-static@latest/icons/users.svg" width="14" height="14" /> **Multiple Recipients** — Send a capsule to multiple email addresses at once.
 
 ---
 
-## How it Works
+## <img src="https://unpkg.com/lucide-static@latest/icons/workflow.svg" width="20" height="20" /> How it Works
 
 The application follows a precise lifecycle to guarantee delivery at the intended time.
 
@@ -49,7 +49,7 @@ This ensures that even if an access token is intercepted, its exposure window is
 
 ---
 
-## Tech Stack
+## <img src="https://unpkg.com/lucide-static@latest/icons/layers.svg" width="20" height="20" /> Tech Stack
 
 | Layer | Technology |
 |:---|:---|
@@ -62,7 +62,7 @@ This ensures that even if an access token is intercepted, its exposure window is
 
 ---
 
-## Getting Started
+## <img src="https://unpkg.com/lucide-static@latest/icons/terminal.svg" width="20" height="20" /> Getting Started
 
 Follow these steps carefully to run the project locally with your own email sender.
 
@@ -209,7 +209,7 @@ Open your browser at: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## How to Test Email Delivery
+## <img src="https://unpkg.com/lucide-static@latest/icons/send.svg" width="20" height="20" /> How to Test Email Delivery
 
 1. Sign up and log in to the app.
 2. Click **"New Capsule"**.
@@ -222,7 +222,7 @@ Open your browser at: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## Project Structure
+## <img src="https://unpkg.com/lucide-static@latest/icons/folder-tree.svg" width="20" height="20" /> Project Structure
 
 ```text
 future-message/
@@ -242,7 +242,7 @@ future-message/
 
 ---
 
-## Troubleshooting
+## <img src="https://unpkg.com/lucide-static@latest/icons/wrench.svg" width="20" height="20" /> Troubleshooting
 
 | Problem | Solution |
 |:---|:---|
@@ -253,7 +253,7 @@ future-message/
 
 ---
 
-## Contributing
+## <img src="https://unpkg.com/lucide-static@latest/icons/git-pull-request.svg" width="20" height="20" /> Contributing
 
 Contributions are welcome. Please follow these conventions to keep the codebase consistent:
 
@@ -265,7 +265,7 @@ Contributions are welcome. Please follow these conventions to keep the codebase 
 
 ---
 
-## License
+## <img src="https://unpkg.com/lucide-static@latest/icons/file-text.svg" width="20" height="20" /> License
 
 MIT License — free to fork, modify, and build upon.
 
