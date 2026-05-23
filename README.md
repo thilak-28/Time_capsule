@@ -6,20 +6,6 @@ A full-stack **MERN** application that lets users create, seal, and schedule dig
 
 ---
 
-## Table of Contents
-
-- [Features](#features)
-- [How it Works](#how-it-works)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [How to Test Email Delivery](#how-to-test-email-delivery)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
 ## Features
 
 - **Secure Time-Locking** — Messages are sealed and hidden until the chosen unlock date.
