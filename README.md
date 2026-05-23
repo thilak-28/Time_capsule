@@ -78,8 +78,8 @@ Make sure you have these installed:
 ### Step 2: Clone the Repository
 
 ```bash
-git clone https://github.com/Sarvan-12/future-message.git
-cd future-message
+git clone https://github.com/Sarvan-12/time-capsule.git
+cd time-capsule
 ```
 
 ---
@@ -225,7 +225,7 @@ Open your browser at: [http://localhost:5173](http://localhost:5173)
 ## <img src="https://api.iconify.design/lucide/folder-tree.svg?color=%237850ff" width="20" height="20" align="center" /> Project Structure
 
 ```text
-future-message/
+time-capsule/
 ├── client/          # React frontend (Vite)
 │   └── src/
 │       ├── components/
