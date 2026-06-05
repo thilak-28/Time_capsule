@@ -6,7 +6,7 @@ A full-stack **MERN** application that lets users create, seal, and schedule dig
 
 [![Live Demo](https://img.shields.io/badge/Live--Demo-7850ff?style=for-the-badge&logo=netlify&logoColor=white)](https://capsuleley.netlify.app/)
 
-⭐ **If you like this project or find it helpful, please consider giving it a star!**
+<h3><img src="https://api.iconify.design/lucide/star.svg?color=%237850ff" width="22" height="22" align="absmiddle" /> If you like this project or find it helpful, please consider giving it a star!</h3>
 
 ---
 
