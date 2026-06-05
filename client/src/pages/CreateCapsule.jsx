@@ -86,16 +86,16 @@ const CreateCapsule = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <button onClick={() => navigate(-1)} className="p-3 glass bg-white/5 border-white/10 hover:bg-white/10 rounded-xl transition-all">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <button onClick={() => navigate(-1)} className="p-3 glass bg-white/5 border-white/10 hover:bg-white/10 rounded-xl transition-all w-fit">
           <ArrowLeft className="w-5 h-5 text-white/70" />
         </button>
-        <div className="flex gap-4">
-          <button onClick={saveDraft} disabled={loading} className="flex items-center gap-2 px-6 py-2.5 glass bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all font-semibold text-sm">
+        <div className="flex gap-3 w-full sm:w-auto">
+          <button onClick={saveDraft} disabled={loading} className="flex-1 sm:flex-none justify-center flex items-center gap-2 px-4 sm:px-6 py-2.5 glass bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all font-semibold text-xs sm:text-sm">
             <Save className="w-4 h-4" />
             Save Draft
           </button>
-          <button onClick={handleSeal} disabled={loading} className="glass-btn-primary flex items-center gap-2">
+          <button onClick={handleSeal} disabled={loading} className="flex-1 sm:flex-none justify-center glass-btn-primary flex items-center gap-2 text-xs sm:text-sm px-4 sm:px-8 py-2.5">
             <Lock className="w-4 h-4" />
             Seal Protocol
           </button>
@@ -170,12 +170,12 @@ const CreateCapsule = () => {
 
             <div className="space-y-3">
               <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Access Protocol</label>
-              <div className="flex gap-2 p-1 glass bg-white/5 border-white/5 rounded-2xl">
+              <div className="flex gap-1 sm:gap-2 p-1 glass bg-white/5 border-white/5 rounded-2xl">
                 {['private', 'shared', 'public'].map((p) => (
                   <button
                     key={p}
                     onClick={() => setFormData({ ...formData, privacy: p })}
-                    className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                    className={`flex-1 py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-wider transition-all ${
                       formData.privacy === p 
                         ? 'bg-accent-purple text-white shadow-lg shadow-accent-purple/20' 
                         : 'text-white/30 hover:text-white/60 hover:bg-white/5'
