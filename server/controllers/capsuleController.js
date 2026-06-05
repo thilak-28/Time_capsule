@@ -120,11 +120,6 @@ exports.deleteCapsule = async (req, res) => {
       return res.status(401).json({ message: 'Not authorized to delete this capsule' });
     }
 
-    // Prevent deleting sealed/delivered capsules
-    if (capsule.status !== 'draft') {
-      return res.status(400).json({ message: 'Sealed or Delivered capsules cannot be deleted' });
-    }
-
     await capsule.deleteOne();
 
     res.status(200).json({
@@ -237,6 +232,35 @@ exports.uploadMedia = async (req, res) => {
       success: true,
       count: fileUrls.length,
       data: capsule,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// @desc    Trigger manual capsule delivery
+// @route   POST /api/capsules/trigger-delivery
+// @access  Public (Protected by API token)
+exports.triggerDelivery = async (req, res) => {
+  try {
+    const token = req.headers['x-scheduler-token'];
+    const expectedToken = process.env.SCHEDULER_TOKEN;
+
+    if (!expectedToken) {
+      return res.status(500).json({ message: 'Scheduler token not configured on server' });
+    }
+
+    if (token !== expectedToken) {
+      return res.status(401).json({ message: 'Unauthorized trigger' });
+    }
+
+    console.log('Delivery triggered via API...');
+    const { deliverCapsules } = require('../utils/scheduler');
+    await deliverCapsules();
+
+    res.status(200).json({
+      success: true,
+      message: 'Capsule delivery check executed successfully',
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

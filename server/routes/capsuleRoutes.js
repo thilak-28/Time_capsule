@@ -9,6 +9,7 @@ const {
   getInbox,
   getPublicCapsules,
   uploadMedia,
+  triggerDelivery,
 } = require('../controllers/capsuleController');
 
 const router = express.Router();
@@ -18,6 +19,7 @@ const upload = require('../middleware/upload');
 
 // Public routes
 router.get('/public', getPublicCapsules);
+router.post('/trigger-delivery', triggerDelivery);
 
 // Protected routes
 router.use(protect);

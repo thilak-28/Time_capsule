@@ -18,10 +18,10 @@ const Landing = () => {
         </div>
         <div className="flex items-center gap-6">
           <Link to="/login" className="text-sm font-bold text-white/40 hover:text-white transition-colors">
-            Vault Access
+            Sign In
           </Link>
           <Link to="/register" className="glass-btn-primary px-8 py-2.5 text-sm">
-            Begin Journey
+            Sign Up
           </Link>
         </div>
       </nav>
@@ -30,7 +30,7 @@ const Landing = () => {
       <section className="container mx-auto px-6 pt-24 pb-32 text-center">
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass bg-white/5 border-white/10 text-accent-purple text-[10px] font-black uppercase tracking-[0.3em] mb-12 stagger-in">
           <Zap className="w-3.5 h-3.5 fill-current" />
-          Quantum Time-Locking Active
+          Secure Digital Time Capsule
         </div>
         <h1 className="text-7xl md:text-[140px] font-black text-white mb-10 tracking-[-0.05em] leading-[0.85] stagger-in" style={{ animationDelay: '0.1s' }}>
           Secure Your <br />
@@ -39,22 +39,25 @@ const Landing = () => {
           </span>
         </h1>
         <p className="text-xl text-white/45 max-w-2xl mx-auto mb-16 leading-relaxed font-medium stagger-in" style={{ animationDelay: '0.2s' }}>
-          The world's most secure digital vault. Preserve messages, media, and memories in a time-locked capsule, destined for the future.
+          Safely lock away messages and media to be delivered to your future self, friends, or family at the exact date and time you choose.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 stagger-in" style={{ animationDelay: '0.3s' }}>
           <Link to="/register" className="glass-btn-primary text-lg px-10 py-5 w-full sm:w-auto flex items-center justify-center gap-3 group">
-            <span className="font-bold">Initialize Vault</span>
+            <span className="font-bold">Get Started</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <button className="px-10 py-5 rounded-2xl glass bg-white/5 border-white/10 text-white font-bold hover:bg-white/10 transition-all flex items-center gap-3 w-full sm:w-auto justify-center">
+          <button 
+            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-10 py-5 rounded-2xl glass bg-white/5 border-white/10 text-white font-bold hover:bg-white/10 transition-all flex items-center gap-3 w-full sm:w-auto justify-center cursor-pointer"
+          >
             <Play className="w-5 h-5 fill-current text-accent-purple" />
-            The Protocol
+            Learn More
           </button>
         </div>
       </section>
 
       {/* Features */}
-      <section className="container mx-auto px-6 py-32 border-t border-white/5">
+      <section id="features" className="container mx-auto px-6 py-32 border-t border-white/5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {

@@ -143,14 +143,20 @@ const deliverCapsules = async () => {
   }
 };
 
-// Run every 1 minute
+// Run every 1 minute (only if configured or in development mode)
 const startScheduler = () => {
-  cron.schedule('* * * * *', () => {
-    console.log('Running capsule delivery check...');
-    deliverCapsules();
-  });
-
-  console.log('Capsule delivery scheduler started (runs every 1 minute)');
+  if (process.env.RUN_LOCAL_CRON === 'true' || (process.env.NODE_ENV === 'development' && process.env.RUN_LOCAL_CRON !== 'false')) {
+    cron.schedule('* * * * *', () => {
+      console.log('Running capsule delivery check...');
+      deliverCapsules();
+    });
+    console.log('Capsule delivery scheduler started (runs every 1 minute)');
+  } else {
+    console.log('Capsule delivery scheduler bypassed (triggered via HTTP endpoint)');
+  }
 };
 
-module.exports = startScheduler;
+module.exports = {
+  startScheduler,
+  deliverCapsules
+};

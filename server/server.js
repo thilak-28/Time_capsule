@@ -8,7 +8,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
-const startScheduler = require('./utils/scheduler');
+const { startScheduler } = require('./utils/scheduler');
 
 // Route files
 const authRoutes = require('./routes/authRoutes');
@@ -46,6 +46,10 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/capsules', capsuleRoutes);
 app.use('/api/notifications', notificationRoutes);
+
+// Global Error Handler Middleware
+const errorHandler = require('./middleware/errorMiddleware');
+app.use(errorHandler);
 
 // Start capsule delivery scheduler
 startScheduler();

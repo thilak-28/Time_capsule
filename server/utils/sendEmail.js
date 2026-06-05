@@ -3,24 +3,30 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 
 const sendEmail = async (options) => {
-  // 1. ALWAYS Save a local copy so you can SEE it's real!
-  const fileName = `email_${Date.now()}.html`;
-  const deliveredDir = path.join(__dirname, '../delivered_emails');
-  const filePath = path.join(deliveredDir, fileName);
-  
-  // Auto-create the folder if it doesn't exist
-  fs.mkdirSync(deliveredDir, { recursive: true });
+  // 1. Save a local copy for debugging in development only
+  if (process.env.NODE_ENV !== 'production') {
+    const fileName = `email_${Date.now()}.html`;
+    const deliveredDir = path.join(__dirname, '../delivered_emails');
+    const filePath = path.join(deliveredDir, fileName);
+    
+    try {
+      // Auto-create the folder if it doesn't exist
+      fs.mkdirSync(deliveredDir, { recursive: true });
 
-  const debugContent = `
-    <h1>CAPSULE DELIVERED</h1>
-    <p><strong>To:</strong> ${options.email}</p>
-    <p><strong>Subject:</strong> ${options.subject}</p>
-    <hr>
-    ${options.html}
-  `;
-  
-  fs.writeFileSync(filePath, debugContent);
-  console.log(`✅ REAL PROOF: Email content saved to server/delivered_emails/${fileName}`);
+      const debugContent = `
+        <h1>CAPSULE DELIVERED</h1>
+        <p><strong>To:</strong> ${options.email}</p>
+        <p><strong>Subject:</strong> ${options.subject}</p>
+        <hr>
+        ${options.html}
+      `;
+      
+      fs.writeFileSync(filePath, debugContent);
+      console.log(`✅ DEBUG PROOF: Email content saved to server/delivered_emails/${fileName}`);
+    } catch (fsErr) {
+      console.warn('⚠️ Could not save email debug file locally:', fsErr.message);
+    }
+  }
 
   // 2. Try the Brevo REST API transport (Bypasses SMTP blocks)
   const axios = require('axios');

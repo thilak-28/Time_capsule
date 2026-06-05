@@ -4,10 +4,12 @@ import { ArrowLeft, Clock, Lock, Mail, Tag, Image as ImageIcon, FileText, Calend
 import { format } from 'date-fns';
 import api from '../api/axios';
 import { toast } from 'react-hot-toast';
+import useAuthStore from '../store/authStore';
 
 const ViewCapsule = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   const [capsule, setCapsule] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,15 +28,40 @@ const ViewCapsule = () => {
     fetchCapsule();
   }, [id, navigate]);
 
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this capsule? This action is permanent and cannot be undone.")) {
+      return;
+    }
+
+    try {
+      await api.delete(`/capsules/${id}`);
+      toast.success('Capsule deleted successfully');
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete capsule');
+    }
+  };
+
   if (loading) return <div className="flex items-center justify-center min-h-[60vh] animate-pulse text-primary-600">Loading your memories...</div>;
 
   const isUnlocked = new Date(capsule.unlockDate) <= new Date();
+  const isCreator = user && capsule && (user.id === capsule.creator);
 
   return (
     <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in">
-      <button onClick={() => navigate(-1)} className="p-3 glass bg-white/5 border-white/10 hover:bg-white/10 rounded-xl transition-all group w-fit">
-        <ArrowLeft className="w-5 h-5 text-white/50 group-hover:text-white transition-colors" />
-      </button>
+      <div className="flex items-center justify-between">
+        <button onClick={() => navigate(-1)} className="p-3 glass bg-white/5 border-white/10 hover:bg-white/10 rounded-xl transition-all group w-fit">
+          <ArrowLeft className="w-5 h-5 text-white/50 group-hover:text-white transition-colors" />
+        </button>
+        {isCreator && (
+          <button 
+            onClick={handleDelete}
+            className="px-6 py-3 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 hover:text-red-300 font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+          >
+            Delete Capsule
+          </button>
+        )}
+      </div>
 
       <div className="relative h-[450px] rounded-[48px] overflow-hidden shadow-2xl border border-white/10 glass-card">
         <img src={capsule.coverImage} alt={capsule.title} className="w-full h-full object-cover brightness-75 scale-105" />
