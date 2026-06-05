@@ -14,7 +14,7 @@ const Landing = () => {
           <div className="p-2 sm:p-2.5 bg-accent-purple/20 border border-accent-purple/30 rounded-xl">
             <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-accent-purple" />
           </div>
-          <span className="text-xl sm:text-2xl font-black text-white tracking-tighter">AETHER</span>
+          <span className="text-xl sm:text-2xl font-black text-white tracking-tighter">TimeCapsule</span>
         </div>
         <div className="flex items-center gap-4 sm:gap-6">
           <Link to="/login" className="text-xs sm:text-sm font-bold text-white/40 hover:text-white transition-colors">
@@ -95,7 +95,7 @@ const Landing = () => {
 
       {/* Footer */}
       <footer className="container mx-auto px-6 py-16 border-t border-white/5 text-center stagger-in">
-        <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.4em]">© 2026 AETHER VAULT PROTOCOL • Bridging Epochs</p>
+        <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.4em]">© 2026 TIMECAPSULE PROTOCOL • Preserving Memories</p>
       </footer>
     </div>
   );

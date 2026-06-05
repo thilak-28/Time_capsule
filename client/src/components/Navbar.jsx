@@ -29,7 +29,7 @@ const Navbar = () => {
               <Clock className="w-6 h-6 text-accent-purple" />
             </div>
             <span className="text-2xl font-bold text-white tracking-tight">
-              Capsule
+              TimeCapsule
             </span>
           </Link>
 
