@@ -266,3 +266,19 @@ exports.triggerDelivery = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// @desc    Delete all capsules for current user
+// @route   DELETE /api/capsules
+// @access  Private
+exports.deleteAllCapsules = async (req, res) => {
+  try {
+    await Capsule.deleteMany({ creator: req.user.id });
+    res.status(200).json({
+      success: true,
+      message: 'All your capsules have been deleted successfully',
+      data: {},
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Clock, Lock, ShieldCheck, Mail, Users } from 'lucide-react';
+import { Clock, Lock, ShieldCheck, Mail, Users, Trash2 } from 'lucide-react';
 import { formatDistanceToNow, format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import api from '../api/axios';
+import { toast } from 'react-hot-toast';
 
-const CapsuleCard = ({ capsule }) => {
+const CapsuleCard = ({ capsule, onDelete }) => {
   const [timeLeft, setTimeLeft] = useState('');
 
   useEffect(() => {
@@ -22,6 +24,25 @@ const CapsuleCard = ({ capsule }) => {
     return () => clearInterval(interval);
   }, [capsule.unlockDate]);
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!window.confirm(`Are you sure you want to delete "${capsule.title}"? This action is permanent and cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      await api.delete(`/capsules/${capsule._id}`);
+      toast.success('Capsule deleted successfully');
+      if (onDelete) {
+        onDelete(capsule._id);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete capsule');
+    }
+  };
+
   const statusColors = {
     draft: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
     sealed: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-500',
@@ -39,7 +60,7 @@ const CapsuleCard = ({ capsule }) => {
   return (
     <Link 
       to={`/capsule/${capsule._id}`}
-      className={`glass-card relative overflow-hidden flex flex-col border-l-4 ${
+      className={`glass-card relative overflow-hidden flex flex-col border-l-4 group ${
         capsule.status === 'sealed' ? 'border-accent-purple shadow-[0_0_20px_rgba(120,80,255,0.1)]' :
         capsule.status === 'delivered' ? 'border-accent-green shadow-[0_0_20px_rgba(0,255,170,0.1)]' :
         'border-white/20'
@@ -52,6 +73,15 @@ const CapsuleCard = ({ capsule }) => {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-base/80 to-transparent" />
+        
+        {/* Delete Card Button */}
+        <button
+          onClick={handleDelete}
+          className="absolute top-4 left-4 p-2 bg-red-500/10 border border-red-500/20 hover:bg-red-500/30 rounded-xl backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-350 cursor-pointer z-10"
+          title="Delete Capsule"
+        >
+          <Trash2 className="w-4 h-4 text-red-400 hover:text-red-300" />
+        </button>
         
         <div className="absolute top-4 right-4 flex gap-2">
           <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.15em] backdrop-blur-xl border border-white/10 ${

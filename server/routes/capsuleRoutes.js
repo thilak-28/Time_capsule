@@ -10,6 +10,7 @@ const {
   getPublicCapsules,
   uploadMedia,
   triggerDelivery,
+  deleteAllCapsules,
 } = require('../controllers/capsuleController');
 
 const router = express.Router();
@@ -26,7 +27,8 @@ router.use(protect);
 
 router.route('/')
   .get(getCapsules)
-  .post(createCapsule);
+  .post(createCapsule)
+  .delete(deleteAllCapsules);
 
 router.get('/inbox', getInbox);
 

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Loader2, Archive, Lock, Send } from 'lucide-react';
+import { Plus, Search, Filter, Loader2, Archive, Lock, Send, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import CapsuleCard from '../components/CapsuleCard';
+import { toast } from 'react-hot-toast';
 
 const Dashboard = () => {
   const [capsules, setCapsules] = useState([]);
@@ -22,6 +23,35 @@ const Dashboard = () => {
     };
     fetchCapsules();
   }, []);
+
+  const handleCardDelete = (deletedId) => {
+    setCapsules(prev => prev.filter(c => c._id !== deletedId));
+  };
+
+  const handleDeleteAll = async () => {
+    if (capsules.length === 0) {
+      toast.error("You have no capsules to delete");
+      return;
+    }
+
+    if (!window.confirm("CRITICAL WARNING: Are you sure you want to delete ALL your capsules? This action is absolute, permanent, and cannot be undone.")) {
+      return;
+    }
+
+    const confirmText = window.prompt("Type 'DELETE ALL' below to confirm the destruction of all your capsules:");
+    if (confirmText !== "DELETE ALL") {
+      toast.error("Wipe cancelled");
+      return;
+    }
+
+    try {
+      await api.delete('/capsules');
+      setCapsules([]);
+      toast.success('All capsules deleted successfully');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete capsules');
+    }
+  };
 
   const filteredCapsules = capsules.filter(c => 
     c.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -82,17 +112,26 @@ const Dashboard = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <button className="flex items-center gap-2 px-6 py-2.5 glass bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all">
-          <Filter className="w-4 h-4" />
-          <span className="font-semibold text-sm">Sort & Filter</span>
-        </button>
+        <div className="flex gap-4 w-full sm:w-auto">
+          <button className="flex items-center gap-2 px-6 py-2.5 glass bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all flex-1 sm:flex-none justify-center">
+            <Filter className="w-4 h-4" />
+            <span className="font-semibold text-sm">Sort & Filter</span>
+          </button>
+          <button 
+            onClick={handleDeleteAll}
+            className="flex items-center gap-2 px-6 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all flex-1 sm:flex-none justify-center cursor-pointer"
+          >
+            <Trash2 className="w-4 h-4" />
+            <span className="font-semibold text-sm">Delete All</span>
+          </button>
+        </div>
       </div>
 
       {/* Grid */}
       {filteredCapsules.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-in" style={{ animationDelay: '0.3s' }}>
           {filteredCapsules.map((capsule) => (
-            <CapsuleCard key={capsule._id} capsule={capsule} />
+            <CapsuleCard key={capsule._id} capsule={capsule} onDelete={handleCardDelete} />
           ))}
         </div>
       ) : (
