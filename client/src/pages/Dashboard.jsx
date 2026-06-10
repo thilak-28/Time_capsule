@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Loader2, Archive, Lock, Send, Trash2 } from 'lucide-react';
+import { Plus, Search, Loader2, Archive, Lock, Send, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import CapsuleCard from '../components/CapsuleCard';
@@ -117,10 +117,6 @@ const Dashboard = () => {
           />
         </div>
         <div className="flex gap-4 w-full sm:w-auto">
-          <button className="vintage-btn-secondary flex-1 sm:flex-none justify-center">
-            <Filter className="w-4 h-4" />
-            <span className="font-bold text-sm">Sort & Filter</span>
-          </button>
           <button 
             onClick={handleDeleteAll}
             className="flex items-center gap-2 px-6 py-2.5 bg-red-500/5 border border-red-500/20 text-red-700 hover:text-red-800 hover:bg-red-500/10 transition-all flex-1 sm:flex-none justify-center cursor-pointer rounded-xl font-serif font-bold"
