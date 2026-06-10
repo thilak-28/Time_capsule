@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Loader2, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, Loader2, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import useAuthStore from '../store/authStore';
 
@@ -14,7 +14,6 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [registeredEmail, setRegisteredEmail] = useState('');
   const { register } = useAuthStore();
   const navigate = useNavigate();
 
@@ -42,9 +41,9 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const res = await register(formData.name, formData.email, formData.password);
-      toast.success(res.message || 'Account created successfully!');
-      setRegisteredEmail(formData.email);
+      await register(formData.name, formData.email, formData.password);
+      toast.success('Account created successfully!');
+      navigate('/dashboard');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');
     } finally {
@@ -59,31 +58,10 @@ const Register = () => {
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
       <div className="w-full max-w-[480px] glass p-10 stagger-in">
-        {registeredEmail ? (
-          <div className="text-center py-4">
-            <div className="w-16 h-16 bg-accent-purple/10 text-accent-purple rounded-full flex items-center justify-center mx-auto mb-6 border border-accent-purple/20">
-              <ShieldCheck className="w-8 h-8" />
-            </div>
-            <h1 className="text-3xl font-bold text-white tracking-tight">Verify Email</h1>
-            <p className="text-white/45 mt-4 font-medium leading-relaxed">
-              We have sent a verification link to <strong>{registeredEmail}</strong>.
-            </p>
-            <p className="text-white/30 text-xs mt-3 italic">
-              Please click the link inside the verification email to activate your account.
-            </p>
-
-            <Link to="/login">
-              <button className="glass-btn-primary w-full py-3.5 mt-8 font-bold tracking-wide">
-                Go to Sign In
-              </button>
-            </Link>
-          </div>
-        ) : (
-          <>
-            <div className="text-center mb-10">
-              <h1 className="text-4xl font-bold text-white tracking-tight">Join Us</h1>
-              <p className="text-white/45 mt-3 font-medium">Start capturing your future today.</p>
-            </div>
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-white tracking-tight">Join Us</h1>
+          <p className="text-white/45 mt-3 font-medium">Start capturing your future today.</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-1.5">
@@ -190,14 +168,12 @@ const Register = () => {
           </button>
         </form>
 
-            <p className="mt-10 text-center text-sm font-medium text-white/30">
-              Already have an account?{' '}
-              <Link to="/login" className="text-accent-purple hover:text-white transition-colors font-bold underline underline-offset-4 decoration-accent-purple/30">
-                Sign in
-              </Link>
-            </p>
-          </>
-        )}
+        <p className="mt-10 text-center text-sm font-medium text-white/30">
+          Already have an account?{' '}
+          <Link to="/login" className="text-accent-purple hover:text-white transition-colors font-bold underline underline-offset-4 decoration-accent-purple/30">
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   );

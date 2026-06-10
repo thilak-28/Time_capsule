@@ -35,7 +35,6 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
-  verificationToken: String,
 });
 
 // Encrypt password using bcrypt
