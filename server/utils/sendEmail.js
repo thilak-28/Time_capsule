@@ -72,7 +72,9 @@ const sendEmail = async (options) => {
     console.error('Data:', JSON.stringify(error.response?.data, null, 2));
     console.error('------------------------');
     console.error('⚠️ NOTE: Brevo API blocked the connection, but your email was successfully generated locally above!');
-    throw new Error('Email could not be sent via Brevo API');
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Email could not be sent via Brevo API');
+    }
   }
 };
 

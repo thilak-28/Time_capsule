@@ -41,6 +41,18 @@ const useAuthStore = create((set) => ({
       set({ user: null, isAuthenticated: false, loading: false });
     }
   },
+
+  forgotPassword: async (email) => {
+    const { data } = await api.post('/auth/forgot-password', { email });
+    return data;
+  },
+
+  resetPassword: async (token, password) => {
+    const { data } = await api.put(`/auth/reset-password/${token}`, { password });
+    setAccessToken(data.accessToken);
+    set({ user: data.user, isAuthenticated: true, loading: false });
+    return data;
+  },
 }));
 
 export default useAuthStore;
