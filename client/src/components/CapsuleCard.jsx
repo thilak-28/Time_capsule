@@ -60,46 +60,48 @@ const CapsuleCard = ({ capsule, onDelete }) => {
   return (
     <Link 
       to={`/capsule/${capsule._id}`}
-      className="vintage-card relative overflow-hidden flex flex-col group p-0"
+      className="vintage-card relative overflow-hidden flex flex-col group p-0 bg-[#fdfaf2] border-2 border-sage-gold"
     >
-      <div className="relative h-44 overflow-hidden">
+      {/* Decorative Vintage Postcard Dashed Border */}
+      <div className="absolute inset-2.5 border border-dashed border-sage-gold/60 rounded-xl pointer-events-none z-20" />
+
+      <div className="relative h-44 overflow-hidden border-b border-sage-gold">
         <img
           src={capsule.coverImage}
           alt={capsule.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90"
+          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700 sepia-[20%] contrast-[95%] brightness-[92%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-deep-forest/40 to-transparent" />
         
         {/* Delete Card Button */}
         <button
           onClick={handleDelete}
-          className="absolute top-4 left-4 p-2 bg-[#fdfdf9]/90 border border-red-500/20 hover:bg-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-350 cursor-pointer z-10"
+          className="absolute top-4 left-4 p-2 bg-[#fdfdf9]/90 border border-red-500/20 hover:bg-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-350 cursor-pointer z-30"
           title="Delete Capsule"
         >
           <Trash2 className="w-4 h-4 text-red-600" />
         </button>
         
-        <div className="absolute top-4 right-4 flex gap-2">
+        <div className="absolute top-4 right-4 flex gap-2 z-30">
           <span className={`rubber-stamp ${
-            capsule.status === 'sealed' ? 'stamp-sealed' :
-            capsule.status === 'delivered' ? 'stamp-delivered' :
-            'stamp-draft'
-          } text-[9px]`}>
+            capsule.status === 'sealed' ? 'stamp-sealed' : 'stamp-delivered'
+          } text-[9px] shadow-sm`}>
             {capsule.status}
           </span>
         </div>
 
         {capsule.status === 'sealed' && (
-          <div className="absolute bottom-4 left-4 p-2 bg-[#fdfdf9]/90 border border-sage-gold rounded-lg">
+          <div className="absolute bottom-4 left-4 p-2 bg-[#fdfdf9]/95 border border-sage-gold rounded-lg z-30">
             <Lock className="w-4 h-4 text-[#800020]" />
           </div>
         )}
       </div>
 
-      <div className="p-6 space-y-5 flex-1 flex flex-col justify-between">
+      {/* Lined paper pattern body */}
+      <div className="p-6 space-y-5 flex-1 flex flex-col justify-between paper-pattern bg-[#fdfaf2]/40">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-deep-forest/40 text-[10px] font-bold font-serif uppercase tracking-widest">
-            <PrivacyIcon className="w-3 h-3 text-ink-green/70" />
+          <div className="flex items-center gap-2 text-deep-forest/50 text-[10px] font-bold font-serif uppercase tracking-widest">
+            <PrivacyIcon className="w-3 h-3 text-ink-green/75" />
             {capsule.privacy}
           </div>
           <h3 className="text-xl font-serif font-bold text-deep-forest tracking-tight leading-tight group-hover:text-ink-green transition-colors duration-300 line-clamp-2">
@@ -109,21 +111,21 @@ const CapsuleCard = ({ capsule, onDelete }) => {
 
         <div className="space-y-4">
           <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2 text-deep-forest/60 font-medium">
+            <div className="flex items-center gap-2 text-deep-forest/70 font-medium">
               <Clock className="w-4 h-4 text-ink-green" />
               {timeLeft}
             </div>
-            <div className="flex items-center gap-2 text-deep-forest/40 font-semibold">
+            <div className="flex items-center gap-2 text-deep-forest/50 font-semibold">
               <Users className="w-4 h-4" />
               {capsule.recipients?.length || 0}
             </div>
           </div>
 
-          <div className="pt-4 border-t border-sage-gold flex items-center justify-between">
+          <div className="pt-4 border-t border-sage-gold/50 flex items-center justify-between">
             <div className="text-[10px] font-bold text-deep-forest/40 uppercase tracking-tighter">
               Unlocks {format(new Date(capsule.unlockDate), 'MMM d, yyyy')}
             </div>
-            <div className="text-[10px] font-bold text-deep-forest/30 uppercase group-hover:text-ink-green transition-colors">
+            <div className="text-[10px] font-bold text-deep-forest/40 uppercase group-hover:text-ink-green transition-colors font-serif">
               Open &rarr;
             </div>
           </div>

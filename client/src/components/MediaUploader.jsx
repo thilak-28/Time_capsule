@@ -49,28 +49,28 @@ const MediaUploader = ({ capsuleId, onUploadComplete }) => {
     <div className="space-y-4">
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-[32px] p-10 text-center cursor-pointer transition-all duration-300 glass bg-white/[0.01] ${
+        className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-300 bg-[#fdfdf9] ${
           isDragActive 
-            ? 'border-accent-purple bg-accent-purple/5 shadow-2xl shadow-accent-purple/10 scale-[0.99]' 
-            : 'border-white/10 hover:border-accent-purple/50 hover:bg-white/[0.03]'
+            ? 'border-ink-green bg-sage-gold/20 scale-[0.99]' 
+            : 'border-sage-gold hover:border-ink-green hover:bg-sage-gold/15'
         }`}
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center">
           {uploading ? (
-            <Loader2 className="w-12 h-12 text-accent-purple animate-spin mb-4" />
+            <Loader2 className="w-12 h-12 text-ink-green animate-spin mb-4" />
           ) : (
-            <div className={`p-4 rounded-2xl bg-white/5 border border-white/10 mb-4 transition-transform ${isDragActive ? 'scale-110' : ''}`}>
-              <Upload className={`w-8 h-8 ${isDragActive ? 'text-accent-purple' : 'text-white/20'}`} />
+            <div className={`p-4 rounded-xl bg-sage-gold/20 border border-sage-gold/40 mb-4 transition-transform ${isDragActive ? 'scale-110' : ''}`}>
+              <Upload className={`w-8 h-8 ${isDragActive ? 'text-ink-green' : 'text-ink-green/60'}`} />
             </div>
           )}
-          <p className="text-white/60 font-bold tracking-tight text-lg">
-            {isDragActive ? 'Release to Materialize' : 'Atmospheric Upload'}
+          <p className="text-deep-forest font-bold font-serif tracking-tight text-lg">
+            {isDragActive ? 'Release to Materialize' : 'Preserve Media Attachments'}
           </p>
-          <p className="text-white/20 text-xs mt-2 font-medium tracking-wide">
-            Drag & drop your essence here, or click to browse
+          <p className="text-deep-forest/50 text-xs mt-2 font-medium tracking-wide">
+            Drag & drop files here, or click to browse
           </p>
-          <div className="mt-6 flex gap-3 text-[10px] font-black uppercase tracking-widest text-white/10">
+          <div className="mt-6 flex gap-3 text-[10px] font-bold uppercase tracking-widest text-deep-forest/40">
              <span>Images</span>
              <span>•</span>
              <span>MP4</span>
