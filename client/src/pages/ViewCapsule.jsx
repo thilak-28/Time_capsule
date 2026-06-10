@@ -64,7 +64,13 @@ const ViewCapsule = () => {
       </div>
 
       <div className="relative h-[260px] sm:h-[450px] rounded-3xl overflow-hidden shadow-sm border border-sage-gold">
-        <img src={capsule.coverImage} alt={capsule.title} className="w-full h-full object-cover brightness-90 scale-102" />
+        <img
+          src={capsule.coverImage.includes('photo-1516541196182-6bdb0516ed27')
+            ? 'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800'
+            : capsule.coverImage}
+          alt={capsule.title}
+          className="w-full h-full object-cover brightness-90 scale-102"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-deep-forest via-deep-forest/20 to-transparent" />
         <div className="absolute bottom-6 left-6 right-6 sm:bottom-12 sm:left-12 sm:right-12">
           <div className="flex items-center gap-4 text-white/50 text-[10px] font-bold font-serif uppercase tracking-[0.2em] mb-4">

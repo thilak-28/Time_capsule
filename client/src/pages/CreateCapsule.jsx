@@ -16,7 +16,7 @@ const CreateCapsule = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    coverImage: 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&q=80&w=800',
+    coverImage: 'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800',
     unlockDate: new Date(Date.now() + 86400000 * 7), // Default 1 week
     deliveryMode: 'in-app',
     privacy: 'private',

@@ -67,7 +67,9 @@ const CapsuleCard = ({ capsule, onDelete }) => {
 
       <div className="relative h-44 overflow-hidden border-b border-sage-gold">
         <img
-          src={capsule.coverImage}
+          src={capsule.coverImage.includes('photo-1516541196182-6bdb0516ed27')
+            ? 'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800'
+            : capsule.coverImage}
           alt={capsule.title}
           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700 sepia-[20%] contrast-[95%] brightness-[92%]"
         />
@@ -82,12 +84,18 @@ const CapsuleCard = ({ capsule, onDelete }) => {
           <Trash2 className="w-4 h-4 text-red-600" />
         </button>
         
-        <div className="absolute top-4 right-4 flex gap-2 z-30">
-          <span className={`rubber-stamp ${
-            capsule.status === 'sealed' ? 'stamp-sealed' : 'stamp-delivered'
-          } text-[9px] shadow-sm`}>
-            {capsule.status}
-          </span>
+        {/* Vintage Postmark cancellation stamp overlay */}
+        <div className="absolute -bottom-6 -right-6 w-28 h-28 pointer-events-none z-20 opacity-45 select-none transform rotate-[15deg] text-deep-forest/50">
+          <svg viewBox="0 0 100 100" className="w-full h-full fill-none stroke-current">
+            <circle cx="50" cy="50" r="42" strokeWidth="1.5" strokeDasharray="3 2" />
+            <circle cx="50" cy="50" r="36" strokeWidth="0.75" />
+            <path d="M 15 45 Q 50 35 85 45" strokeWidth="1" />
+            <path d="M 15 52 Q 50 42 85 52" strokeWidth="1" />
+            <path d="M 15 59 Q 50 49 85 59" strokeWidth="1" />
+            <text x="50" y="30" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fontWeight="bold" fill="currentColor" stroke="none">TIMECAPSULE</text>
+            <text x="50" y="76" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fill="currentColor" stroke="none">POST RELAY</text>
+            <text x="50" y="51" textAnchor="middle" fontSize="8" fontFamily="monospace" fontWeight="bold" fill="currentColor" stroke="none">{format(new Date(capsule.createdAt), 'dd.MM.yy')}</text>
+          </svg>
         </div>
 
         {capsule.status === 'sealed' && (
@@ -100,9 +108,16 @@ const CapsuleCard = ({ capsule, onDelete }) => {
       {/* Lined paper pattern body */}
       <div className="p-6 space-y-5 flex-1 flex flex-col justify-between paper-pattern bg-[#fdfaf2]/40">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-deep-forest/50 text-[10px] font-bold font-serif uppercase tracking-widest">
-            <PrivacyIcon className="w-3 h-3 text-ink-green/75" />
-            {capsule.privacy}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-deep-forest/50 text-[10px] font-bold font-serif uppercase tracking-widest">
+              <PrivacyIcon className="w-3 h-3 text-ink-green/75" />
+              {capsule.privacy}
+            </div>
+            <span className={`rubber-stamp ${
+              capsule.status === 'sealed' ? 'stamp-sealed' : 'stamp-delivered'
+            } text-[9px] shadow-sm`}>
+              {capsule.status}
+            </span>
           </div>
           <h3 className="text-xl font-serif font-bold text-deep-forest tracking-tight leading-tight group-hover:text-ink-green transition-colors duration-300 line-clamp-2">
             {capsule.title}
