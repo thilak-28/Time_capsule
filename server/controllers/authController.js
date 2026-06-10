@@ -15,14 +15,48 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
+    const crypto = require('crypto');
+    const verificationToken = crypto.randomBytes(20).toString('hex');
+
     // Create user
     const user = await User.create({
       name,
       email,
       password,
+      verificationToken,
+      isVerified: false,
     });
 
-    sendTokenResponse(user, 201, res);
+    // Create verification url
+    const verifyUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/verify-email/${verificationToken}`;
+
+    const message = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #0f0c1b; color: #ffffff;">
+        <h2 style="color: #a855f7; text-align: center; font-size: 24px; margin-bottom: 24px;">Time Capsule - Verify Your Account</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.8);">Thank you for creating an account with Digital Time Capsule.</p>
+        <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.8);">Click the button below to verify your email address and activate your account:</p>
+        <div style="text-align: center; margin: 32px 0;">
+          <a href="${verifyUrl}" style="background-color: #a855f7; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Verify Email</a>
+        </div>
+        <p style="font-size: 12px; color: rgba(255,255,255,0.4); text-align: center;">If you did not sign up for an account, please ignore this email.</p>
+      </div>
+    `;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Verify Your Email - Digital Time Capsule',
+        html: message
+      });
+    } catch (mailErr) {
+      console.error('Failed to send verification email:', mailErr.message);
+      // We still proceed in dev mode since it creates the local HTML file anyway
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'Registration successful! Please check your email to verify your account.'
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -52,6 +86,11 @@ exports.login = async (req, res) => {
 
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Block unverified users
+    if (!user.isVerified) {
+      return res.status(400).json({ message: 'Please verify your email address to log in.' });
     }
 
     sendTokenResponse(user, 200, res);
@@ -234,6 +273,27 @@ exports.resetPassword = async (req, res) => {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
+    await user.save();
+
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// @desc    Verify email address
+// @route   POST /api/auth/verify-email/:token
+// @access  Public
+exports.verifyEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ verificationToken: req.params.token });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired verification token.' });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
     await user.save();
 
     sendTokenResponse(user, 200, res);
