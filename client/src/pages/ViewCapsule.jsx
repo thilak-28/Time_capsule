@@ -48,75 +48,75 @@ const ViewCapsule = () => {
   const isCreator = user && capsule && (user.id === capsule.creator);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in">
+    <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between">
-        <button onClick={() => navigate(-1)} className="p-3 glass bg-white/5 border-white/10 hover:bg-white/10 rounded-xl transition-all group w-fit">
-          <ArrowLeft className="w-5 h-5 text-white/50 group-hover:text-white transition-colors" />
+        <button onClick={() => navigate(-1)} className="p-3 border border-sage-gold bg-[#fdfdf9] hover:bg-sage-gold/25 text-ink-green rounded-xl transition-all group w-fit cursor-pointer">
+          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
         </button>
         {isCreator && (
           <button 
             onClick={handleDelete}
-            className="px-6 py-3 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 hover:text-red-300 font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+            className="px-6 py-3 bg-red-500/5 border border-red-500/20 text-red-700 hover:text-red-800 hover:bg-red-500/10 font-bold font-serif rounded-xl transition-all flex items-center gap-2 cursor-pointer"
           >
             Delete Capsule
           </button>
         )}
       </div>
 
-      <div className="relative h-[260px] sm:h-[450px] rounded-[24px] sm:rounded-[48px] overflow-hidden shadow-2xl border border-white/10 glass-card">
-        <img src={capsule.coverImage} alt={capsule.title} className="w-full h-full object-cover brightness-75 scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-base via-navy-base/20 to-transparent" />
+      <div className="relative h-[260px] sm:h-[450px] rounded-3xl overflow-hidden shadow-sm border border-sage-gold">
+        <img src={capsule.coverImage} alt={capsule.title} className="w-full h-full object-cover brightness-90 scale-102" />
+        <div className="absolute inset-0 bg-gradient-to-t from-deep-forest via-deep-forest/20 to-transparent" />
         <div className="absolute bottom-6 left-6 right-6 sm:bottom-12 sm:left-12 sm:right-12">
-          <div className="flex items-center gap-4 text-white/50 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
-            <span className={`px-4 py-1 rounded-full backdrop-blur-2xl border border-white/10 ${
-              capsule.status === 'sealed' ? 'bg-accent-purple/20 text-accent-purple' : 'bg-accent-green/20 text-accent-green'
+          <div className="flex items-center gap-4 text-white/50 text-[10px] font-bold font-serif uppercase tracking-[0.2em] mb-4">
+            <span className={`rubber-stamp ${
+              capsule.status === 'sealed' ? 'stamp-sealed' : 'stamp-delivered'
             }`}>
               {capsule.status}
             </span>
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-accent-purple" />
+            <span className="flex items-center gap-2 text-paper-cream/80">
+              <Calendar className="w-4 h-4 text-paper-cream" />
               {format(new Date(capsule.createdAt), 'MMMM d, yyyy')}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">{capsule.title}</h1>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold font-serif text-paper-cream tracking-tight leading-none">{capsule.title}</h1>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         <div className="lg:col-span-8 space-y-10">
           {!isUnlocked && capsule.status === 'sealed' ? (
-            <div className="glass p-16 text-center rounded-[48px] border-white/5 bg-white/[0.01] space-y-8 stagger-in">
-              <div className="inline-flex p-8 bg-accent-purple/10 border border-accent-purple/20 rounded-[32px] shadow-2xl shadow-accent-purple/5 animate-pulse">
-                <Lock className="w-16 h-16 text-accent-purple" />
+            <div className="vintage-card p-16 text-center rounded-3xl space-y-8 stagger-in">
+              <div className="inline-flex p-8 bg-[#800020]/10 border border-[#800020]/25 rounded-3xl shadow-sm animate-pulse">
+                <Lock className="w-16 h-16 text-[#800020]" />
               </div>
               <div className="space-y-4">
-                <h2 className="text-3xl font-black text-white tracking-tight">Time-Locked Protocol</h2>
-                <p className="text-white/40 max-w-sm mx-auto font-medium leading-relaxed">
-                  This memory is preserved in a quantum state and will materialize on <br />
-                  <span className="text-accent-purple font-black text-xl mt-2 block tracking-wide">
+                <h2 className="text-3xl font-bold font-serif text-deep-forest tracking-tight">Time-Locked Protocol</h2>
+                <p className="text-deep-forest/60 max-w-sm mx-auto font-medium leading-relaxed">
+                  This memory is preserved in a sealed envelope and will materialize on <br />
+                  <span className="text-[#800020] font-bold text-xl mt-2 block tracking-wide">
                     {format(new Date(capsule.unlockDate), 'PPPP p')}
                   </span>
                 </p>
               </div>
             </div>
           ) : (
-            <div className="glass p-12 rounded-[48px] border-white/5 bg-white/[0.02] shadow-sm stagger-in">
-              <div className="prose prose-invert max-w-none prose-p:text-white/70 prose-p:leading-loose prose-p:text-lg prose-headings:text-white prose-headings:font-black prose-headings:tracking-tighter">
+            <div className="vintage-card p-12 rounded-3xl shadow-sm paper-pattern lined-paper text-deep-forest stagger-in">
+              <div className="prose max-w-none text-deep-forest prose-p:text-deep-forest/80 prose-p:leading-loose prose-p:text-lg prose-headings:text-deep-forest prose-headings:font-bold prose-headings:font-serif">
                 <div dangerouslySetInnerHTML={{ __html: capsule.content }} />
               </div>
               
               {capsule.media.length > 0 && (
-                <div className="mt-16 pt-12 border-t border-white/5 space-y-8">
-                  <h3 className="flex items-center gap-3 text-2xl font-black text-white tracking-tight">
-                    <ImageIcon className="w-6 h-6 text-accent-purple" /> Preserved Media
+                <div className="mt-16 pt-12 border-t border-sage-gold space-y-8">
+                  <h3 className="flex items-center gap-3 text-2xl font-bold font-serif text-deep-forest tracking-tight">
+                    <ImageIcon className="w-6 h-6 text-ink-green" /> Preserved Media
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                     {capsule.media.map((url, i) => (
-                      <a key={i} href={url} target="_blank" rel="noreferrer" className="group relative aspect-video rounded-3xl overflow-hidden border border-white/10 glass bg-white/5">
-                        <img src={url} alt="Attachment" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-navy-base/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                          <div className="p-3 bg-accent-purple/20 rounded-2xl border border-accent-purple/40">
-                            <FileText className="w-6 h-6 text-white" />
+                      <a key={i} href={url} target="_blank" rel="noreferrer" className="group relative aspect-video rounded-3xl overflow-hidden border border-sage-gold bg-sage-gold/10">
+                        <img src={url} alt="Attachment" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-[#0d530e]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                          <div className="p-3 bg-paper-cream/20 rounded-2xl border border-paper-cream/40">
+                            <FileText className="w-6 h-6 text-paper-cream" />
                           </div>
                         </div>
                       </a>
@@ -129,37 +129,37 @@ const ViewCapsule = () => {
         </div>
 
         <div className="lg:col-span-4 space-y-10 stagger-in">
-          <div className="glass p-10 rounded-[40px] border-white/5 bg-white/[0.02] space-y-10 shadow-sm">
+          <div className="vintage-card p-10 rounded-3xl space-y-10 shadow-sm">
             <div className="space-y-6">
-              <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Designated Recipients</h4>
+              <h4 className="text-[10px] font-bold font-serif text-deep-forest/40 uppercase tracking-[0.3em]">Designated Recipients</h4>
               <div className="space-y-4">
                 {capsule.recipients.map((r, i) => (
                   <div key={i} className="flex items-center gap-4 group">
-                    <div className="w-10 h-10 rounded-2xl bg-accent-purple/10 border border-accent-purple/20 flex items-center justify-center text-accent-purple text-xs font-black shadow-lg shadow-accent-purple/5 transition-transform group-hover:scale-110">
+                    <div className="w-10 h-10 rounded-2xl bg-sage-gold/25 border border-sage-gold flex items-center justify-center text-ink-green text-xs font-bold shadow-sm transition-transform group-hover:scale-105">
                       {r.email[0].toUpperCase()}
                     </div>
-                    <span className="text-sm font-bold text-white/70 group-hover:text-white transition-colors">{r.email}</span>
+                    <span className="text-sm font-bold text-deep-forest/80 group-hover:text-deep-forest transition-colors">{r.email}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-6">
-              <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Transmission Mode</h4>
-              <div className="flex items-center gap-4 p-4 glass bg-white/5 border-white/10 rounded-3xl">
-                <div className="p-2 bg-blue-500/10 rounded-xl border border-blue-500/20">
-                  <Mail className="w-5 h-5 text-blue-400" />
+              <h4 className="text-[10px] font-bold font-serif text-deep-forest/40 uppercase tracking-[0.3em]">Transmission Mode</h4>
+              <div className="flex items-center gap-4 p-4 bg-sage-gold/20 border border-sage-gold/45 rounded-3xl">
+                <div className="p-2 bg-deep-forest/10 rounded-xl border border-sage-gold">
+                  <Mail className="w-5 h-5 text-ink-green" />
                 </div>
-                <span className="text-xs font-black text-white/60 uppercase tracking-widest">{capsule.deliveryMode.replace('-', ' ')} protocol</span>
+                <span className="text-xs font-bold text-deep-forest/65 uppercase tracking-widest">{capsule.deliveryMode.replace('-', ' ')} protocol</span>
               </div>
             </div>
 
             {capsule.tags.length > 0 && (
               <div className="space-y-6">
-                <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Archive Tags</h4>
+                <h4 className="text-[10px] font-bold font-serif text-deep-forest/40 uppercase tracking-[0.3em]">Archive Tags</h4>
                 <div className="flex flex-wrap gap-2">
                   {capsule.tags.map(t => (
-                    <span key={t} className="px-4 py-2 glass bg-white/5 border-white/10 rounded-xl text-[10px] font-black text-white/50 uppercase tracking-widest hover:text-accent-purple transition-colors">
+                    <span key={t} className="px-4 py-2 bg-sage-gold/25 border border-sage-gold/50 rounded-xl text-[10px] font-bold text-deep-forest/60 uppercase tracking-widest hover:text-ink-green hover:border-ink-green transition-colors">
                       #{t}
                     </span>
                   ))}

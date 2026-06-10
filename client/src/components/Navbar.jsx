@@ -21,14 +21,14 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-navy-base/60 backdrop-blur-[30px] border-b border-white/5">
+    <nav className="sticky top-0 z-50 bg-[#fdfdf9] border-b border-sage-gold shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-18">
           <Link to="/dashboard" className="flex items-center gap-2 group">
-            <div className="p-2 bg-accent-purple/20 border border-accent-purple/30 rounded-xl group-hover:rotate-12 transition-transform duration-300">
-              <Clock className="w-6 h-6 text-accent-purple" />
+            <div className="p-2 bg-sage-gold/25 border border-sage-gold/50 rounded-xl group-hover:rotate-6 transition-transform duration-300">
+              <Clock className="w-5 h-5 text-ink-green" />
             </div>
-            <span className="text-2xl font-bold text-white tracking-tight">
+            <span className="text-2xl font-serif font-bold text-deep-forest tracking-tight">
               TimeCapsule
             </span>
           </Link>
@@ -38,13 +38,13 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
+                className={`flex items-center gap-2 text-sm font-bold font-serif transition-all duration-300 ${
                   location.pathname === item.path
-                    ? 'text-white'
-                    : 'text-white/45 hover:text-white'
+                    ? 'text-deep-forest'
+                    : 'text-deep-forest/60 hover:text-deep-forest'
                 }`}
               >
-                <item.icon className={`w-4 h-4 ${location.pathname === item.path ? 'text-accent-purple' : ''}`} />
+                <item.icon className={`w-4 h-4 ${location.pathname === item.path ? 'text-ink-green' : 'text-deep-forest/40'}`} />
                 {item.name}
               </Link>
             ))}
@@ -53,20 +53,20 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <NotificationBell />
             
-            <div className="flex items-center gap-3 px-4 py-1.5 glass bg-white/5 border-white/10 rounded-full">
+            <div className="flex items-center gap-2 px-3 py-1 bg-sage-gold/20 border border-sage-gold/40 rounded-full">
               <img
-                src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.name}&background=7850ff&color=fff`}
+                src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.name}&background=0D530E&color=FBF5DD`}
                 alt="Profile"
-                className="w-7 h-7 rounded-full border border-white/20"
+                className="w-6 h-6 rounded-full border border-sage-gold"
               />
-              <span className="hidden sm:inline text-sm font-semibold text-white/90">
+              <span className="hidden sm:inline text-xs font-bold text-deep-forest">
                 {user?.name}
               </span>
             </div>
 
             <button
               onClick={handleLogout}
-              className="p-2 text-white/45 hover:text-red-400 hover:bg-red-400/10 rounded-xl transition-all"
+              className="p-2 text-deep-forest/50 hover:text-[#800020] hover:bg-[#800020]/5 rounded-xl transition-all cursor-pointer"
               title="Logout"
             >
               <LogOut className="w-5 h-5" />
@@ -76,7 +76,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Bottom Tab Bar */}
-      <div className="flex md:hidden fixed bottom-0 left-0 right-0 z-50 bg-navy-base/90 backdrop-blur-[30px] border-t border-white/5 shadow-2xl">
+      <div className="flex md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#fdfdf9] border-t border-sage-gold shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
         <div className="flex justify-around items-center w-full h-16 px-4">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -85,11 +85,11 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 text-[10px] font-bold tracking-tight transition-all duration-300 ${
-                  isActive ? 'text-white' : 'text-white/45'
+                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 text-[10px] font-bold font-serif tracking-tight transition-all duration-300 ${
+                  isActive ? 'text-deep-forest' : 'text-deep-forest/50'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-accent-purple' : ''}`} />
+                <Icon className={`w-5 h-5 ${isActive ? 'text-ink-green' : 'text-deep-forest/40'}`} />
                 <span>{item.name}</span>
               </Link>
             );

@@ -54,21 +54,21 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
-      <div className="w-full max-w-[460px] glass p-10 stagger-in">
+      <div className="w-full max-w-[460px] vintage-card stagger-in">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white tracking-tight">Forge New Access Key</h1>
-          <p className="text-white/45 mt-3 font-medium">Create a strong, memorable credentials secret.</p>
+          <h1 className="text-4xl font-bold font-serif text-deep-forest tracking-tight">Forge New Access Key</h1>
+          <p className="text-deep-forest/65 mt-2 font-medium">Create a strong, memorable credentials secret.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* New Password */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">New Password</label>
+            <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">New Password</label>
             <div className="relative group">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="w-full glass-input pl-12 pr-12"
+                className="w-full vintage-input pl-12 pr-12"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -76,7 +76,7 @@ const ResetPassword = () => {
               />
               <button
                 type="button"
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-deep-forest/30 hover:text-deep-forest transition-colors cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -85,12 +85,12 @@ const ResetPassword = () => {
             {/* Password strength bar */}
             {password && (
               <div className="mt-2.5 px-1 space-y-1.5">
-                <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-sage-gold/40 rounded-full overflow-hidden">
                   <div className={`h-full ${strength.color} ${strength.width} transition-all duration-355`} />
                 </div>
                 <div className="flex justify-between items-center text-[10px] font-bold tracking-wider uppercase">
-                  <span className="text-white/30">Vault Integrity:</span>
-                  <span className={strength.label === 'Weak Password' ? 'text-red-400' : strength.label === 'Moderate Security' ? 'text-amber-400' : 'text-emerald-400'}>
+                  <span className="text-deep-forest/50">Vault Integrity:</span>
+                  <span className={strength.label === 'Weak Password' ? 'text-red-600' : strength.label === 'Moderate Security' ? 'text-amber-600' : 'text-emerald-700'}>
                     {strength.label}
                   </span>
                 </div>
@@ -100,12 +100,12 @@ const ResetPassword = () => {
 
           {/* Confirm Password */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Confirm Password</label>
+            <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Confirm Password</label>
             <div className="relative group">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
-                className="w-full glass-input pl-12 pr-12"
+                className="w-full vintage-input pl-12 pr-12"
                 placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -113,7 +113,7 @@ const ResetPassword = () => {
               />
               <button
                 type="button"
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-deep-forest/30 hover:text-deep-forest transition-colors cursor-pointer"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -124,7 +124,7 @@ const ResetPassword = () => {
           <button
             type="submit"
             disabled={loading}
-            className="glass-btn-primary w-full flex items-center justify-center gap-3 py-3.5 mt-6"
+            className="vintage-btn-primary w-full py-3.5 mt-2"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
               <span className="font-bold tracking-wide">Update and Lock Vault</span>
@@ -132,9 +132,9 @@ const ResetPassword = () => {
           </button>
         </form>
 
-        <p className="mt-8 text-center text-sm font-medium text-white/30">
+        <p className="mt-8 text-center text-sm font-medium text-deep-forest/50">
           Link expired or error?{' '}
-          <Link to="/forgot-password" className="text-accent-purple hover:text-white transition-colors font-bold underline underline-offset-4 decoration-accent-purple/30">
+          <Link to="/forgot-password" className="text-ink-green hover:text-deep-forest transition-colors font-bold underline underline-offset-4 decoration-ink-green/30">
             Request new link
           </Link>
         </p>

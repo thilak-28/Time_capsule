@@ -28,20 +28,20 @@ const Login = () => {
 
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
-      <div className="w-full max-w-[440px] glass p-10 stagger-in">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white tracking-tight">Welcome Back</h1>
-          <p className="text-white/45 mt-3 font-medium">Continue your journey through time.</p>
+      <div className="w-full max-w-[440px] vintage-card stagger-in">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold font-serif text-deep-forest tracking-tight">Welcome Back</h1>
+          <p className="text-deep-forest/65 mt-2 font-medium">Continue your journey through time.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Email Address</label>
+            <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Email Address</label>
             <div className="relative group">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
               <input
                 type="email"
-                className="w-full glass-input pl-12"
+                className="w-full vintage-input pl-12"
                 placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -52,16 +52,16 @@ const Login = () => {
 
           <div className="space-y-2">
             <div className="flex justify-between items-center ml-1">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Password</label>
-              <Link to="/forgot-password" className="text-[10px] font-black uppercase tracking-wider text-accent-purple hover:text-white transition-colors">
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50">Password</label>
+              <Link to="/forgot-password" className="text-[10px] font-bold font-serif uppercase tracking-wider text-ink-green hover:text-deep-forest transition-colors">
                 Forgot Pass?
               </Link>
             </div>
             <div className="relative group">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="w-full glass-input pl-12 pr-12"
+                className="w-full vintage-input pl-12 pr-12"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -69,7 +69,7 @@ const Login = () => {
               />
               <button
                 type="button"
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-deep-forest/30 hover:text-deep-forest transition-colors cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -80,7 +80,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="glass-btn-primary w-full flex items-center justify-center gap-3 py-3.5 mt-4"
+            className="vintage-btn-primary w-full py-3.5 mt-2"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
               <>
@@ -90,9 +90,9 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="mt-10 text-center text-sm font-medium text-white/30">
+        <p className="mt-8 text-center text-sm font-medium text-deep-forest/50">
           New to the vault?{' '}
-          <Link to="/register" className="text-accent-purple hover:text-white transition-colors font-bold underline underline-offset-4 decoration-accent-purple/30">
+          <Link to="/register" className="text-ink-green hover:text-deep-forest transition-colors font-bold underline underline-offset-4 decoration-ink-green/30">
             Secure an account
           </Link>
         </p>

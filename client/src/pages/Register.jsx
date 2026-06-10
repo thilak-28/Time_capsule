@@ -83,22 +83,22 @@ const Register = () => {
 
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center p-6">
-      <div className="w-full max-w-[480px] glass p-10 stagger-in">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white tracking-tight">Join Us</h1>
-          <p className="text-white/45 mt-3 font-medium">Start capturing your future today.</p>
+      <div className="w-full max-w-[480px] vintage-card stagger-in">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold font-serif text-deep-forest tracking-tight">Join Us</h1>
+          <p className="text-deep-forest/65 mt-2 font-medium">Start capturing your future today.</p>
         </div>
 
         {step === 1 ? (
           <form onSubmit={handleRequestOTP} className="space-y-6">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Full Name</label>
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Full Name</label>
               <div className="relative group">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
                 <input
                   type="text"
                   name="name"
-                  className="w-full glass-input pl-12"
+                  className="w-full vintage-input pl-12"
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={handleChange}
@@ -108,13 +108,13 @@ const Register = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Email Address</label>
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Email Address</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
                 <input
                   type="email"
                   name="email"
-                  className="w-full glass-input pl-12"
+                  className="w-full vintage-input pl-12"
                   placeholder="name@example.com"
                   value={formData.email}
                   onChange={handleChange}
@@ -126,7 +126,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={sendingOtp}
-              className="glass-btn-primary w-full flex items-center justify-center gap-3 py-3.5 mt-6"
+              className="vintage-btn-primary w-full py-3.5 mt-2"
             >
               {sendingOtp ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <span className="font-bold tracking-wide">Send Verification Code</span>
@@ -135,15 +135,15 @@ const Register = () => {
           </form>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="flex justify-between items-center bg-white/5 border border-white/10 rounded-lg p-3.5 mb-6 text-sm">
+            <div className="flex justify-between items-center bg-sage-gold/20 border border-sage-gold/40 rounded-lg p-3.5 mb-6 text-sm">
               <div>
-                <p className="text-white/30 text-[10px] uppercase font-black tracking-wider">Signing up as</p>
-                <p className="text-white font-medium truncate max-w-[240px]">{formData.email}</p>
+                <p className="text-deep-forest/50 text-[10px] uppercase font-bold tracking-wider">Signing up as</p>
+                <p className="text-deep-forest font-medium truncate max-w-[240px]">{formData.email}</p>
               </div>
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="text-xs text-accent-purple font-bold hover:text-white transition-colors flex items-center gap-1"
+                className="text-xs text-ink-green font-bold hover:text-deep-forest transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <ChevronLeft className="w-3.5 h-3.5" /> Edit
               </button>
@@ -151,14 +151,14 @@ const Register = () => {
 
             {/* Verification Code Input */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">6-Digit Code</label>
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">6-Digit Code</label>
               <div className="relative group">
-                <Key className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+                <Key className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
                 <input
                   type="text"
                   name="otp"
                   maxLength={6}
-                  className="w-full glass-input pl-12 tracking-[0.25em] font-mono text-center text-lg"
+                  className="w-full vintage-input pl-12 tracking-[0.25em] font-mono text-center text-lg"
                   placeholder="000000"
                   value={formData.otp}
                   onChange={handleChange}
@@ -170,13 +170,13 @@ const Register = () => {
             {/* Password Fields */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Password</label>
+                <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Password</label>
                 <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
-                    className="w-full glass-input pl-12 pr-12"
+                    className="w-full vintage-input pl-12 pr-12"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={handleChange}
@@ -184,7 +184,7 @@ const Register = () => {
                   />
                   <button
                     type="button"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-deep-forest/30 hover:text-deep-forest transition-colors cursor-pointer"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -192,12 +192,12 @@ const Register = () => {
                 </div>
                 {formData.password && (
                   <div className="mt-1 px-1">
-                    <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-sage-gold/40 rounded-full overflow-hidden">
                       <div className={`h-full ${strength.color} ${strength.width} transition-all duration-300`} />
                     </div>
                     <div className="flex justify-between items-center text-[8px] font-bold tracking-wider uppercase mt-1">
-                      <span className="text-white/30">Strength:</span>
-                      <span className={strength.label === 'Weak' ? 'text-red-400' : strength.label === 'Medium' ? 'text-amber-400' : 'text-emerald-400'}>
+                      <span className="text-deep-forest/50">Strength:</span>
+                      <span className={strength.label === 'Weak' ? 'text-red-600' : strength.label === 'Medium' ? 'text-amber-600' : 'text-emerald-700'}>
                         {strength.label}
                       </span>
                     </div>
@@ -206,13 +206,13 @@ const Register = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Confirm</label>
+                <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Confirm</label>
                 <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="confirmPassword"
-                    className="w-full glass-input pl-12 pr-12"
+                    className="w-full vintage-input pl-12 pr-12"
                     placeholder="••••••••"
                     value={formData.confirmPassword}
                     onChange={handleChange}
@@ -220,7 +220,7 @@ const Register = () => {
                   />
                   <button
                     type="button"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-deep-forest/30 hover:text-deep-forest transition-colors cursor-pointer"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -232,7 +232,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="glass-btn-primary w-full flex items-center justify-center gap-3 py-3.5 mt-6"
+              className="vintage-btn-primary w-full py-3.5 mt-2"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <span className="font-bold tracking-wide">Verify & Create Account</span>
@@ -241,9 +241,9 @@ const Register = () => {
           </form>
         )}
 
-        <p className="mt-10 text-center text-sm font-medium text-white/30">
+        <p className="mt-8 text-center text-sm font-medium text-deep-forest/50">
           Already have an account?{' '}
-          <Link to="/login" className="text-accent-purple hover:text-white transition-colors font-bold underline underline-offset-4 decoration-accent-purple/30">
+          <Link to="/login" className="text-ink-green hover:text-deep-forest transition-colors font-bold underline underline-offset-4 decoration-ink-green/30">
             Sign in
           </Link>
         </p>

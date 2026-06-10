@@ -47,11 +47,11 @@ const NotificationBell = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+        className="relative p-2 text-deep-forest/60 hover:text-deep-forest hover:bg-sage-gold/25 rounded-lg transition-colors cursor-pointer"
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900">
+          <span className="absolute top-1 right-1 w-4.5 h-4.5 bg-[#800020] text-paper-cream text-[9px] font-bold flex items-center justify-center rounded-full border border-[#fdfdf9]">
             {unreadCount}
           </span>
         )}
@@ -60,28 +60,28 @@ const NotificationBell = () => {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 mt-2 w-80 glass rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-              <h3 className="font-bold">Notifications</h3>
-              <span className="text-xs text-slate-500">{unreadCount} unread</span>
+          <div className="absolute right-0 mt-2 w-80 bg-[#fdfdf9] border border-sage-gold rounded-2xl shadow-lg z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-4 border-b border-sage-gold flex justify-between items-center bg-sage-gold/15">
+              <h3 className="font-serif font-bold text-deep-forest">Notifications</h3>
+              <span className="text-xs text-deep-forest/50 font-bold">{unreadCount} unread</span>
             </div>
-            <div className="max-h-96 overflow-y-auto">
+            <div className="max-h-96 overflow-y-auto scroll-thin">
               {notifications.length > 0 ? (
-                <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                <div className="divide-y divide-sage-gold/30">
                   {notifications.map((n) => (
-                    <div key={n._id} className={`p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${!n.isRead ? 'bg-primary-50/50 dark:bg-primary-900/10' : ''}`}>
-                      <p className="text-sm text-slate-800 dark:text-slate-200 mb-2">{n.message}</p>
+                    <div key={n._id} className={`p-4 hover:bg-sage-gold/15 transition-colors ${!n.isRead ? 'bg-sage-gold/20' : ''}`}>
+                      <p className="text-sm text-deep-forest mb-2">{n.message}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-slate-400 font-medium">
+                        <span className="text-[10px] text-deep-forest/40 font-bold">
                           {new Date(n.createdAt).toLocaleDateString()}
                         </span>
                         <div className="flex gap-2">
                           {!n.isRead && (
-                            <button onClick={() => markAsRead(n._id)} className="p-1 hover:text-emerald-500" title="Mark as read">
+                            <button onClick={() => markAsRead(n._id)} className="p-1 text-deep-forest/50 hover:text-[#0D530E] cursor-pointer" title="Mark as read">
                               <Check className="w-4 h-4" />
                             </button>
                           )}
-                          <button onClick={() => deleteNotif(n._id)} className="p-1 hover:text-red-500" title="Delete">
+                          <button onClick={() => deleteNotif(n._id)} className="p-1 text-deep-forest/50 hover:text-[#800020] cursor-pointer" title="Delete">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -90,7 +90,7 @@ const NotificationBell = () => {
                   ))}
                 </div>
               ) : (
-                <div className="p-8 text-center text-slate-400">
+                <div className="p-8 text-center text-deep-forest/40">
                   <p className="text-sm">No notifications</p>
                 </div>
               )}

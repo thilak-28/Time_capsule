@@ -84,18 +84,18 @@ const CreateCapsule = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in">
+    <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <button onClick={() => navigate(-1)} className="p-3 glass bg-white/5 border-white/10 hover:bg-white/10 rounded-xl transition-all w-fit">
-          <ArrowLeft className="w-5 h-5 text-white/70" />
+        <button onClick={() => navigate(-1)} className="p-3 border border-sage-gold bg-[#fdfdf9] hover:bg-sage-gold/25 text-ink-green rounded-xl transition-all w-fit cursor-pointer">
+          <ArrowLeft className="w-5 h-5" />
         </button>
         <div className="flex gap-3 w-full sm:w-auto">
-          <button onClick={saveDraft} disabled={loading} className="flex-1 sm:flex-none justify-center flex items-center gap-2 px-4 sm:px-6 py-2.5 glass bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all font-semibold text-xs sm:text-sm">
+          <button onClick={saveDraft} disabled={loading} className="vintage-btn-secondary flex-1 sm:flex-none justify-center">
             <Save className="w-4 h-4" />
             Save Draft
           </button>
-          <button onClick={handleSeal} disabled={loading} className="flex-1 sm:flex-none justify-center glass-btn-primary flex items-center gap-2 text-xs sm:text-sm px-4 sm:px-8 py-2.5">
+          <button onClick={handleSeal} disabled={loading} className="vintage-btn-primary flex-1 sm:flex-none justify-center">
             <Lock className="w-4 h-4" />
             Seal Protocol
           </button>
@@ -105,15 +105,15 @@ const CreateCapsule = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left Column: Editor & Media */}
         <div className="lg:col-span-8 space-y-8">
-          <div className="glass p-8 space-y-6">
+          <div className="vintage-card p-8 space-y-6 paper-pattern">
             <input
               type="text"
               placeholder="Archive Title..."
-              className="text-4xl font-bold bg-transparent border-none outline-none w-full text-white placeholder:text-white/10 tracking-tight"
+              className="text-4xl font-bold font-serif bg-transparent border-none outline-none w-full text-deep-forest placeholder:text-deep-forest/20 tracking-tight"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             />
-            <div className="border-t border-white/5 pt-6">
+            <div className="border-t border-sage-gold pt-6">
               <RichTextEditor
                 content={formData.content}
                 onChange={(html) => setFormData({ ...formData, content: html })}
@@ -121,9 +121,9 @@ const CreateCapsule = () => {
             </div>
           </div>
 
-          <div className="glass p-8">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-white">
-              <ImageIcon className="w-5 h-5 text-accent-purple" />
+          <div className="vintage-card p-8">
+            <h3 className="text-xl font-bold font-serif mb-6 flex items-center gap-3 text-deep-forest">
+              <ImageIcon className="w-5 h-5 text-ink-green" />
               Preserved Media
             </h3>
             <div className="p-1">
@@ -135,10 +135,10 @@ const CreateCapsule = () => {
             {formData.media.length > 0 && (
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {formData.media.map((url, i) => (
-                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-white/10 glass bg-white/5 group relative">
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-sage-gold bg-sage-gold/10 group relative">
                     <img src={url} alt="Attachment" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-navy-base/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <Plus className="w-6 h-6 text-white rotate-45" />
+                    <div className="absolute inset-0 bg-[#0d530e]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <Plus className="w-6 h-6 text-paper-cream rotate-45" />
                     </div>
                   </div>
                 ))}
@@ -149,10 +149,10 @@ const CreateCapsule = () => {
 
         {/* Right Column: Settings */}
         <div className="lg:col-span-4 space-y-8">
-          <div className="glass p-8 space-y-8">
+          <div className="vintage-card p-8 space-y-8">
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1 flex items-center gap-2">
-                <CalendarIcon className="w-3.5 h-3.5 text-accent-purple" />
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1 flex items-center gap-2">
+                <CalendarIcon className="w-3.5 h-3.5 text-ink-green" />
                 Unlock Timestamp
               </label>
               <DatePicker
@@ -163,22 +163,22 @@ const CreateCapsule = () => {
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 timeCaption="time"
-                className="w-full glass-input"
+                className="w-full vintage-input"
                 dateFormat="MMMM d, yyyy h:mm aa"
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Access Protocol</label>
-              <div className="flex gap-1 sm:gap-2 p-1 glass bg-white/5 border-white/5 rounded-2xl">
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Access Protocol</label>
+              <div className="flex gap-1 sm:gap-2 p-1 bg-sage-gold/20 border border-sage-gold/30 rounded-2xl">
                 {['private', 'shared', 'public'].map((p) => (
                   <button
                     key={p}
                     onClick={() => setFormData({ ...formData, privacy: p })}
-                    className={`flex-1 py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-wider transition-all ${
+                    className={`flex-1 py-2 rounded-xl text-[9px] sm:text-[10px] font-bold font-serif uppercase tracking-wider transition-all cursor-pointer ${
                       formData.privacy === p 
-                        ? 'bg-accent-purple text-white shadow-lg shadow-accent-purple/20' 
-                        : 'text-white/30 hover:text-white/60 hover:bg-white/5'
+                        ? 'bg-deep-forest text-paper-cream shadow-md' 
+                        : 'text-deep-forest/50 hover:text-deep-forest hover:bg-sage-gold/10'
                     }`}
                   >
                     {p}
@@ -188,9 +188,9 @@ const CreateCapsule = () => {
             </div>
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1 flex items-center justify-between">
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1 flex items-center justify-between">
                 Designated Recipients
-                <button onClick={addRecipient} className="p-1.5 glass bg-white/5 border-white/10 hover:bg-accent-purple/20 text-accent-purple rounded-lg transition-all">
+                <button onClick={addRecipient} className="p-1.5 bg-[#fdfdf9] border border-sage-gold hover:bg-sage-gold/25 text-ink-green rounded-lg transition-all cursor-pointer">
                   <Plus className="w-4 h-4" />
                 </button>
               </label>
@@ -198,17 +198,17 @@ const CreateCapsule = () => {
                 {formData.recipients.map((r, i) => (
                   <div key={i} className="flex gap-3">
                     <div className="relative flex-1 group">
-                      <UserPlus className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-accent-purple transition-colors" />
+                      <UserPlus className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-deep-forest/30 group-focus-within:text-ink-green transition-colors" />
                       <input
                         type="email"
-                        className="w-full glass-input pl-10 py-2 text-sm"
+                        className="w-full vintage-input pl-10 py-2 text-sm"
                         placeholder="email@example.com"
                         value={r.email}
                         onChange={(e) => handleRecipientChange(i, e.target.value)}
                       />
                     </div>
                     {formData.recipients.length > 1 && (
-                      <button onClick={() => removeRecipient(i)} className="text-white/20 hover:text-red-400 transition-colors">
+                      <button onClick={() => removeRecipient(i)} className="text-deep-forest/30 hover:text-red-600 transition-colors cursor-pointer">
                         <X className="w-4 h-4" />
                       </button>
                     )}
@@ -218,9 +218,9 @@ const CreateCapsule = () => {
             </div>
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Transmission Mode</label>
+              <label className="text-[10px] font-bold font-serif uppercase tracking-[0.2em] text-deep-forest/50 ml-1">Transmission Mode</label>
               <select
-                className="w-full glass-input py-2 text-sm appearance-none bg-navy-base"
+                className="w-full vintage-input py-2 text-sm bg-[#fdfdf9] cursor-pointer"
                 value={formData.deliveryMode}
                 onChange={(e) => setFormData({ ...formData, deliveryMode: e.target.value })}
               >

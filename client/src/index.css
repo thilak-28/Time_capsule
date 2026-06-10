@@ -1,84 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Special+Elite&family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 @theme {
-  --color-navy-base: #0a0f1e;
-  --color-mesh-purple: #1a0533;
-  --color-mesh-blue: #0d1b4b;
-  --color-accent-purple: #7850ff;
-  --color-accent-green: #00ffaa;
+  --color-paper-cream: #FBF5DD;
+  --color-sage-gold: #E7E1B1;
+  --color-ink-green: #306D29;
+  --color-deep-forest: #0D530E;
   
+  --font-serif: "Playfair Display", serif;
+  --font-typewriter: "Special Elite", monospace;
+  --font-lora: "Lora", serif;
   --font-inter: "Inter", sans-serif;
 }
 
 @layer base {
   :root {
-    --glass-bg: rgba(255, 255, 255, 0.06);
-    --glass-blur: blur(40px) saturate(180%);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.12);
-    --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    --paper-cream: #FBF5DD;
+    --sage-gold: #E7E1B1;
+    --ink-green: #306D29;
+    --deep-forest: #0D530E;
   }
 
   body {
-    @apply bg-navy-base text-white/75 font-inter min-h-screen relative overflow-x-hidden selection:bg-accent-purple/30;
+    @apply bg-paper-cream text-deep-forest font-lora min-h-screen relative overflow-x-hidden selection:bg-ink-green/20;
     background-image: 
-      radial-gradient(at 0% 0%, var(--color-mesh-purple) 0, transparent 50%),
-      radial-gradient(at 100% 0%, var(--color-mesh-blue) 0, transparent 50%);
+      radial-gradient(at 50% 50%, rgba(251, 245, 221, 0.4) 0%, rgba(231, 225, 177, 0.15) 100%);
   }
 
-  /* Blurred Background Orbs */
-  body::before, body::after {
-    content: '';
-    @apply fixed -z-10 w-[500px] h-[500px] rounded-full blur-[120px] opacity-40 pointer-events-none;
-  }
-
-  body::before {
-    @apply bg-accent-purple top-[-10%] left-[-10%];
-    animation: drift 20s infinite alternate ease-in-out;
-  }
-
-  body::after {
-    @apply bg-blue-600 bottom-[-10%] right-[-10%];
-    animation: drift 25s infinite alternate-reverse ease-in-out;
+  /* Ruled paper background utility lines */
+  .paper-pattern {
+    background-image: linear-gradient(rgba(48, 109, 41, 0.04) 1px, transparent 1px);
+    background-size: 100% 2rem;
   }
 }
 
-@keyframes drift {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(100px, 50px) scale(1.1); }
+@utility vintage-card {
+  @apply bg-[#fdfdf9] border border-sage-gold rounded-2xl p-6 shadow-[0_4px_12px_rgba(13,83,14,0.03)] transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_8px_20px_rgba(13,83,14,0.06)] hover:border-ink-green/30;
 }
 
-@utility glass {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), var(--glass-inset);
-  @apply rounded-3xl transition-all duration-300;
+@utility vintage-btn-primary {
+  @apply bg-deep-forest border border-deep-forest text-paper-cream font-serif font-bold px-6 py-2.5 rounded-xl hover:bg-ink-green hover:border-ink-green transition-all duration-200 active:scale-98 shadow-[0_4px_8px_rgba(13,83,14,0.12)] cursor-pointer inline-flex items-center justify-center gap-2;
 }
 
-@utility glass-card {
-  @apply glass hover:translate-y-[-2px] hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)];
+@utility vintage-btn-secondary {
+  @apply bg-transparent border border-ink-green text-ink-green font-serif font-bold px-6 py-2.5 rounded-xl hover:bg-sage-gold/25 transition-all duration-200 active:scale-98 cursor-pointer inline-flex items-center justify-center gap-2;
 }
 
-@utility glass-btn-primary {
-  @apply glass bg-accent-purple/35 border-white/10 hover:bg-accent-purple/50 active:scale-95 text-white font-medium px-6 py-2.5 shadow-[0_0_20px_rgba(120,80,255,0.3)];
+@utility vintage-input {
+  @apply bg-[#fdfdf9] border border-sage-gold rounded-xl px-4 py-2.5 text-deep-forest outline-none transition-all placeholder:text-deep-forest/40 focus:border-ink-green/70 focus:ring-4 focus:ring-ink-green/5;
 }
 
-@utility glass-input {
-  @apply bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none transition-all placeholder:text-white/35 focus:border-accent-purple/60 focus:ring-4 focus:ring-accent-purple/10;
+@utility rubber-stamp {
+  @apply inline-block font-typewriter border-2 px-3 py-1 rounded text-sm font-semibold uppercase tracking-wider select-none transform rotate-[-3deg];
+}
+
+@utility stamp-sealed {
+  @apply border-[#800020] text-[#800020] bg-[#800020]/5;
+}
+
+@utility stamp-delivered {
+  @apply border-[#0D530E] text-[#0D530E] bg-[#0D530E]/5;
+}
+
+@utility stamp-draft {
+  @apply border-[#8b7355] text-[#8b7355] bg-[#8b7355]/5;
+}
+
+@utility wax-seal-btn {
+  @apply bg-[#800020] text-paper-cream font-serif font-bold rounded-full w-14 h-14 flex items-center justify-center shadow-[inset_0_2px_4px_rgba(255,255,255,0.25),0_4px_8px_rgba(0,0,0,0.25)] transition-all hover:scale-105 active:scale-95 cursor-pointer relative;
 }
 
 @utility scroll-thin {
-  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar { width: 6px; }
   &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { @apply bg-white/20 rounded-full; }
+  &::-webkit-scrollbar-thumb { @apply bg-sage-gold/50 rounded-full; }
 }
 
 /* Animations */
 .stagger-in {
   opacity: 0;
-  transform: translateY(16px);
-  animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  transform: translateY(12px);
+  animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes slideUp {
