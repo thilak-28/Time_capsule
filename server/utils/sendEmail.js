@@ -34,7 +34,7 @@ const sendEmail = async (options) => {
   try {
     const emailData = {
       sender: {
-        name: 'Time Capsule',
+        name: options.senderName || 'Time Capsule',
         email: process.env.EMAIL_FROM || process.env.SMTP_USER,
       },
       to: [
@@ -45,6 +45,13 @@ const sendEmail = async (options) => {
       subject: options.subject,
       htmlContent: options.html,
     };
+
+    if (options.replyTo) {
+      emailData.replyTo = {
+        email: options.replyTo,
+        name: options.replyToName || options.senderName || 'Time Capsule Creator'
+      };
+    }
 
     // Only add attachment field if there are actually files to send
     if (options.attachments && options.attachments.length > 0) {

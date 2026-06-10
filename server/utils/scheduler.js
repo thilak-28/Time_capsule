@@ -55,6 +55,9 @@ const deliverCapsules = async () => {
             await sendEmail({
               email: recipient.email,
               subject: `🎉 Your Time Capsule "${capsule.title}" has been unlocked!`,
+              senderName: `${capsule.creator.name} via Time Capsule`,
+              replyTo: capsule.creator.email,
+              replyToName: capsule.creator.name,
               html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 12px;">
                   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
@@ -62,7 +65,7 @@ const deliverCapsules = async () => {
                   </div>
                   <div style="padding: 30px; color: #333;">
                     <h2 style="color: #1f2937;">${capsule.title}</h2>
-                    <p style="color: #666;">A message from the past from <strong>${capsule.creator.name}</strong>:</p>
+                    <p style="color: #666;">A message from the past from <strong>${capsule.creator.name} (${capsule.creator.email})</strong>:</p>
                     <div style="background: #fdfbf7; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0; font-style: italic;">
                       ${capsule.content}
                     </div>
