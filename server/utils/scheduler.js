@@ -54,24 +54,25 @@ const deliverCapsules = async () => {
             // 2. Send the Email
             await sendEmail({
               email: recipient.email,
-              subject: `🎉 Your Time Capsule "${capsule.title}" has been unlocked!`,
+              subject: `Your Time Capsule "${capsule.title}" has been unlocked!`,
               senderName: `${capsule.creator.name} via Time Capsule`,
               replyTo: capsule.creator.email,
               replyToName: capsule.creator.name,
               html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 12px;">
-                  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
-                    <h1 style="color: white; margin: 0;">🕰️ Time Capsule Unlocked!</h1>
+                <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 2px dashed #E7E1B1; background-color: #FBF5DD; color: #0D530E;">
+                  <div style="text-align: center; border-bottom: 1px solid #E7E1B1; padding-bottom: 20px; margin-bottom: 24px;">
+                    <h1 style="color: #0D530E; font-size: 28px; margin: 0; font-family: Georgia, serif; font-weight: bold; letter-spacing: 1px;">DIGITAL TIME CAPSULE</h1>
+                    <p style="color: #306D29; font-size: 14px; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 2px;">Time Capsule Unlocked</p>
                   </div>
-                  <div style="padding: 30px; color: #333;">
-                    <h2 style="color: #1f2937;">${capsule.title}</h2>
-                    <p style="color: #666;">A message from the past from <strong>${capsule.creator.name} (${capsule.creator.email})</strong>:</p>
-                    <div style="background: #fdfbf7; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea; margin: 20px 0; font-style: italic;">
+                  <div style="color: #0D530E;">
+                    <h2 style="font-family: Georgia, serif; color: #0D530E; font-size: 22px; margin-top: 0; border-bottom: 1px solid rgba(231,225,177,0.5); padding-bottom: 8px;">${capsule.title}</h2>
+                    <p style="font-size: 15px; line-height: 1.5;">A message from the past from <strong>${capsule.creator.name} (${capsule.creator.email})</strong>:</p>
+                    <div style="background-color: #fdfdf9; padding: 25px; border-radius: 4px; border-left: 4px solid #306D29; border-top: 1px solid #E7E1B1; border-right: 1px solid #E7E1B1; border-bottom: 1px solid #E7E1B1; margin: 24px 0; font-family: 'Courier New', Courier, monospace; font-size: 15px; line-height: 1.6; color: #0D530E; white-space: pre-wrap;">
                       ${capsule.content}
                     </div>
-                    ${capsule.media && capsule.media.length > 0 ? '<p style="font-size: 14px; color: #888;">Attached you will find your preserved media assets.</p>' : ''}
+                    ${capsule.media && capsule.media.length > 0 ? '<p style="font-size: 13px; color: #306D29; font-style: italic; margin-top: 15px;">Attached you will find your preserved media assets.</p>' : ''}
                   </div>
-                  <div style="background: #f9fafb; padding: 15px; border-radius: 0 0 10px 10px; text-align: center; font-size: 12px; color: #aaa;">
+                  <div style="border-top: 1px solid #E7E1B1; padding-top: 20px; margin-top: 30px; text-align: center; font-size: 11px; color: #306D29; opacity: 0.7;">
                     Created on ${capsule.createdAt.toLocaleDateString()} • Delivered by Digital Time Capsule
                   </div>
                 </div>

@@ -193,14 +193,20 @@ exports.forgotPassword = async (req, res) => {
     const resetUrl = `${primaryFrontendUrl}/reset-password/${resetToken}`;
 
     const message = `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #0f0c1b; color: #ffffff;">
-        <h2 style="color: #a855f7; text-align: center; font-size: 24px; margin-bottom: 24px;">Time Capsule - Decrypt Your Vault</h2>
-        <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.8);">We received a request to reset the password for your Time Capsule account.</p>
-        <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.8);">Click the button below to forge a new password. This link will expire in 15 minutes.</p>
-        <div style="text-align: center; margin: 32px 0;">
-          <a href="${resetUrl}" style="background-color: #a855f7; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Reset Password</a>
+      <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 2px dashed #E7E1B1; background-color: #FBF5DD; color: #0D530E;">
+        <div style="text-align: center; border-bottom: 1px solid #E7E1B1; padding-bottom: 20px; margin-bottom: 24px;">
+          <h1 style="color: #0D530E; font-size: 28px; margin: 0; font-family: Georgia, serif; font-weight: bold; letter-spacing: 1px;">DIGITAL TIME CAPSULE</h1>
+          <p style="color: #306D29; font-size: 14px; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 2px;">Account Recovery</p>
         </div>
-        <p style="font-size: 12px; color: rgba(255,255,255,0.4); text-align: center;">If you did not request a password reset, please ignore this email.</p>
+        <p style="font-size: 16px; line-height: 1.6;">We received a request to reset the password for your Time Capsule account.</p>
+        <p style="font-size: 16px; line-height: 1.6;">Click the button below to forge a new password. This link will expire in 15 minutes.</p>
+        <div style="text-align: center; margin: 35px 0;">
+          <a href="${resetUrl}" style="background-color: #0D530E; border: 1px solid #306D29; color: #FBF5DD; padding: 12px 30px; text-decoration: none; font-family: Georgia, serif; font-size: 16px; font-weight: bold; letter-spacing: 1px; display: inline-block; box-shadow: 3px 3px 0px #E7E1B1;">Reset Password</a>
+        </div>
+        <div style="border-top: 1px solid #E7E1B1; padding-top: 20px; margin-top: 30px; text-align: center;">
+          <p style="font-size: 12px; color: #306D29; margin: 0; font-style: italic;">If you did not request a password reset, please ignore this email.</p>
+          <p style="font-size: 11px; color: #306D29; opacity: 0.7; margin: 8px 0 0 0;">Digital Time Capsule • Archiving Your Memories</p>
+        </div>
       </div>
     `;
 
@@ -290,12 +296,20 @@ exports.sendOTP = async (req, res) => {
     );
 
     const message = `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #0f0c1b; color: #ffffff; text-align: center;">
-        <h2 style="color: #a855f7; font-size: 24px; margin-bottom: 24px;">Time Capsule Signup Verification</h2>
-        <p style="font-size: 16px; color: rgba(255,255,255,0.8);">Thank you for creating an account with Digital Time Capsule.</p>
-        <p style="font-size: 16px; color: rgba(255,255,255,0.8);">Use the verification code below to complete your registration:</p>
-        <div style="font-size: 32px; font-weight: bold; color: #a855f7; letter-spacing: 4px; margin: 24px 0; background-color: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px; display: inline-block;">${code}</div>
-        <p style="font-size: 12px; color: rgba(255,255,255,0.4); text-align: center; margin-top: 16px;">This code will expire in 10 minutes.</p>
+      <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 2px dashed #E7E1B1; background-color: #FBF5DD; color: #0D530E; text-align: center;">
+        <div style="border-bottom: 1px solid #E7E1B1; padding-bottom: 20px; margin-bottom: 24px;">
+          <h1 style="color: #0D530E; font-size: 28px; margin: 0; font-family: Georgia, serif; font-weight: bold; letter-spacing: 1px;">DIGITAL TIME CAPSULE</h1>
+          <p style="color: #306D29; font-size: 14px; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 2px;">Signup Verification</p>
+        </div>
+        <p style="font-size: 16px; line-height: 1.6; text-align: left; color: #0D530E;">Thank you for creating an account with Digital Time Capsule.</p>
+        <p style="font-size: 16px; line-height: 1.6; text-align: left; color: #0D530E;">Use the verification code below to complete your registration:</p>
+        <div style="font-family: 'Courier New', Courier, monospace; font-size: 36px; font-weight: bold; color: #0D530E; letter-spacing: 6px; margin: 30px auto; background-color: #fdfdf9; border: 1px solid #E7E1B1; padding: 15px 30px; display: inline-block; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.02);">
+          ${code}
+        </div>
+        <p style="font-size: 12px; color: #306D29; margin-top: 20px; font-style: italic;">This verification code will expire in 10 minutes.</p>
+        <div style="border-top: 1px solid #E7E1B1; padding-top: 20px; margin-top: 35px;">
+          <p style="font-size: 11px; color: #306D29; opacity: 0.7; margin: 0;">Digital Time Capsule • Archiving Your Memories</p>
+        </div>
       </div>
     `;
 
