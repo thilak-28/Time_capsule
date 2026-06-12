@@ -30,25 +30,28 @@ app.use(cookieParser());
 // Enable CORS
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(',').map(o => o.trim())
-  : [
-      'https://time-capsule-31mv.vercel.app',
-      'https://capsuley.netlify.app',
-      'https://unsent.sarvan.me'
-    ];
+  : [];
+
+// Regex to allow all Vercel preview & production URLs for this project
+const vercelPreviewRegex = /^https:\/\/time-capsule-[\w-]+(\.vercel\.app)$/;
 
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    // In development, allow ANY localhost port (Vite can use 5173, 5174, 5175, etc.)
+    // In development, allow ANY localhost port
     if (process.env.NODE_ENV === 'development' && /^http:\/\/localhost:\d+$/.test(origin)) {
       return callback(null, true);
     }
+    // Allow Vercel preview/production URLs matching the project pattern
+    if (vercelPreviewRegex.test(origin)) {
+      return callback(null, true);
+    }
+    // Allow explicitly listed origins from FRONTEND_URL env var
     if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
       return callback(null, true);
-    } else {
-      return callback(new Error(`Origin ${origin} not allowed by CORS`));
     }
+    return callback(new Error(`Origin ${origin} not allowed by CORS`));
   },
   credentials: true,
 }));
