@@ -1,6 +1,7 @@
 const CSReminder = require('../models/CSReminder');
 const CSReminderSchedule = require('../models/CSReminderSchedule');
 const Notification = require('../models/Notification');
+const { scanAndSendCSReminders } = require('../utils/scheduler');
 
 // Helper to generate day-based schedules for a CS reminder
 const generateSchedules = async (reminder) => {
@@ -46,6 +47,8 @@ exports.createCSReminder = async (req, res) => {
 
     if (reminder.status === 'active') {
       await generateSchedules(reminder);
+      // Fire-and-forget: immediately send any overdue/today schedules
+      scanAndSendCSReminders().catch(err => console.error('Immediate CS scan error:', err.message));
     }
 
     res.status(201).json({ success: true, data: reminder });

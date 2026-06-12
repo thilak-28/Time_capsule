@@ -1,6 +1,7 @@
 const PSReminder = require('../models/PSReminder');
 const ReminderSchedule = require('../models/ReminderSchedule');
 const Notification = require('../models/Notification');
+const { scanAndSendReminders } = require('../utils/scheduler');
 
 // Helper to generate schedules for a reminder
 const generateSchedules = async (reminder) => {
@@ -48,6 +49,8 @@ exports.createCapsule = async (req, res) => {
 
     if (reminder.status === 'active') {
       await generateSchedules(reminder);
+      // Fire-and-forget: immediately send any overdue/today schedules
+      scanAndSendReminders().catch(err => console.error('Immediate scan error:', err.message));
     }
 
     res.status(201).json({
@@ -204,6 +207,8 @@ exports.sealCapsule = async (req, res) => {
 
     // Generate schedules
     await generateSchedules(reminder);
+    // Fire-and-forget: immediately send any overdue/today schedules
+    scanAndSendReminders().catch(err => console.error('Immediate scan error:', err.message));
 
     res.status(200).json({
       success: true,
