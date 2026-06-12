@@ -71,6 +71,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/capsules', psReminderRoutes);
 app.use('/api/cs-reminders', csReminderRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.all('/api/cron', require('./api/cron'));
 
 // Global Error Handler Middleware
 const errorHandler = require('./middleware/errorMiddleware');
