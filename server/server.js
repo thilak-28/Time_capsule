@@ -31,6 +31,7 @@ app.use(cookieParser());
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(',').map(o => o.trim())
   : [
+      'https://time-capsule-31mv.vercel.app',
       'https://capsuley.netlify.app',
       'https://unsent.sarvan.me'
     ];
