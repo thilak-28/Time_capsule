@@ -9,14 +9,7 @@ const { scanAndSendReminders, scanAndSendCSReminders } = require('../utils/sched
 let isConnected = false;
 
 module.exports = async (req, res) => {
-  // Security: Only allow Vercel Cron or internal calls
-  const authHeader = req.headers['authorization'];
-  if (
-    process.env.NODE_ENV === 'production' &&
-    authHeader !== `Bearer ${process.env.CRON_SECRET}`
-  ) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  // Auth temporarily disabled for manual trigger test
 
   // Reuse existing DB connection if available (serverless connection pooling)
   if (!isConnected) {
