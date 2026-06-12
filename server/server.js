@@ -13,6 +13,7 @@ const { startScheduler } = require('./utils/scheduler');
 // Route files
 const authRoutes = require('./routes/authRoutes');
 const psReminderRoutes = require('./routes/psReminderRoutes');
+const csReminderRoutes = require('./routes/csReminderRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 
 // Connect to database
@@ -61,6 +62,7 @@ app.get('/', (req, res) => {
 // Mount routes
 app.use('/api/auth', authRoutes);
 app.use('/api/capsules', psReminderRoutes);
+app.use('/api/cs-reminders', csReminderRoutes);
 app.use('/api/notifications', notificationRoutes);
 
 // Global Error Handler Middleware

@@ -12,8 +12,10 @@ import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 
 import CreateCapsule from './pages/CreateCapsule';
+import CreateCSReminder from './pages/CreateCSReminder';
 import Inbox from './pages/Inbox';
 import ViewCapsule from './pages/ViewCapsule';
+import ViewCSCapsule from './pages/ViewCSCapsule';
 
 
 // Components
@@ -44,6 +46,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/capsule/new" element={<CreateCapsule />} />
               <Route path="/capsule/:id" element={<ViewCapsule />} />
+              <Route path="/cs-capsule/new" element={<CreateCSReminder />} />
+              <Route path="/cs-capsule/:id" element={<ViewCSCapsule />} />
               <Route path="/inbox" element={<Inbox />} />
               <Route path="/" element={<Navigate to="/dashboard" />} />
             </Route>

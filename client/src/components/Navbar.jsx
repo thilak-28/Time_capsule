@@ -20,6 +20,7 @@ const Navbar = () => {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'New PS Reminder', path: '/capsule/new', icon: PlusCircle },
+    { name: 'New CS Reminder', path: '/cs-capsule/new', icon: PlusCircle, cs: true },
     { name: 'Inbox', path: '/inbox', icon: Inbox },
   ];
 
@@ -32,7 +33,7 @@ const Navbar = () => {
               <Clock className="w-5 h-5 text-ink-green" />
             </div>
             <span className="text-2xl font-serif font-bold text-deep-forest tracking-tight">
-              PS Reminder Manager
+              Filing Reminder Manager
             </span>
           </Link>
 
@@ -43,11 +44,15 @@ const Navbar = () => {
                 to={item.path}
                 className={`flex items-center gap-2 text-sm font-bold font-serif transition-all duration-300 ${
                   location.pathname === item.path
-                    ? 'text-deep-forest'
-                    : 'text-deep-forest/60 hover:text-deep-forest'
+                    ? item.cs ? 'text-purple-700' : 'text-deep-forest'
+                    : item.cs ? 'text-purple-500/70 hover:text-purple-700' : 'text-deep-forest/60 hover:text-deep-forest'
                 }`}
               >
-                <item.icon className={`w-4 h-4 ${location.pathname === item.path ? 'text-ink-green' : 'text-deep-forest/40'}`} />
+                <item.icon className={`w-4 h-4 ${
+                  location.pathname === item.path
+                    ? item.cs ? 'text-purple-600' : 'text-ink-green'
+                    : item.cs ? 'text-purple-400' : 'text-deep-forest/40'
+                }`} />
                 {item.name}
               </Link>
             ))}
@@ -80,20 +85,23 @@ const Navbar = () => {
 
       {/* Mobile Bottom Tab Bar */}
       <div className="flex md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#fdfdf9] border-t border-sage-gold shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
-        <div className="flex justify-around items-center w-full h-16 px-4">
+        <div className="flex justify-around items-center w-full h-16 px-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
+            const shortName = item.name === 'New PS Reminder' ? 'New PS' : item.name === 'New CS Reminder' ? 'New CS' : item.name;
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 text-[10px] font-bold font-serif tracking-tight transition-all duration-300 ${
-                  isActive ? 'text-deep-forest' : 'text-deep-forest/50'
+                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 text-[9px] font-bold font-serif tracking-tight transition-all duration-300 ${
+                  isActive
+                    ? item.cs ? 'text-purple-700' : 'text-deep-forest'
+                    : item.cs ? 'text-purple-400' : 'text-deep-forest/50'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-ink-green' : 'text-deep-forest/40'}`} />
-                <span>{item.name}</span>
+                <Icon className={`w-5 h-5 ${isActive ? (item.cs ? 'text-purple-600' : 'text-ink-green') : (item.cs ? 'text-purple-300' : 'text-deep-forest/40')}`} />
+                <span>{shortName}</span>
               </Link>
             );
           })}
