@@ -11,12 +11,12 @@ const {
   uploadMedia,
   triggerDelivery,
   deleteAllCapsules,
-} = require('../controllers/capsuleController');
+  getAnalytics,
+} = require('../controllers/psReminderController');
 
 const router = express.Router();
 
 const { protect } = require('../middleware/authMiddleware');
-const upload = require('../middleware/upload');
 
 // Public routes
 router.get('/public', getPublicCapsules);
@@ -25,12 +25,14 @@ router.post('/trigger-delivery', triggerDelivery);
 // Protected routes
 router.use(protect);
 
+// Analytics route needs to be defined BEFORE /:id
+router.get('/analytics', getAnalytics);
+router.get('/inbox', getInbox);
+
 router.route('/')
   .get(getCapsules)
   .post(createCapsule)
   .delete(deleteAllCapsules);
-
-router.get('/inbox', getInbox);
 
 router.route('/:id')
   .get(getCapsule)
@@ -38,8 +40,5 @@ router.route('/:id')
   .delete(deleteCapsule);
 
 router.post('/:id/seal', sealCapsule);
-
-// File upload — up to 5 files at once
-router.post('/:id/upload', upload.array('media', 5), uploadMedia);
 
 module.exports = router;

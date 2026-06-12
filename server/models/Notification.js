@@ -21,7 +21,7 @@ const notificationSchema = new mongoose.Schema({
   },
   capsuleId: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Capsule',
+    ref: 'PSReminder',
   },
   createdAt: {
     type: Date,

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { LogOut, PlusCircle, Inbox, LayoutDashboard, Clock } from 'lucide-react';
 import useAuthStore from '../store/authStore';
@@ -8,15 +9,17 @@ const Navbar = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleLogout = async () => {
+    setIsConfirmOpen(false);
     await logout();
     navigate('/login');
   };
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'New Capsule', path: '/capsule/new', icon: PlusCircle },
+    { name: 'New PS Reminder', path: '/capsule/new', icon: PlusCircle },
     { name: 'Inbox', path: '/inbox', icon: Inbox },
   ];
 
@@ -29,7 +32,7 @@ const Navbar = () => {
               <Clock className="w-5 h-5 text-ink-green" />
             </div>
             <span className="text-2xl font-serif font-bold text-deep-forest tracking-tight">
-              TimeCapsule
+              PS Reminder Manager
             </span>
           </Link>
 
@@ -65,7 +68,7 @@ const Navbar = () => {
             </div>
 
             <button
-              onClick={handleLogout}
+              onClick={() => setIsConfirmOpen(true)}
               className="p-2 text-deep-forest/50 hover:text-[#800020] hover:bg-[#800020]/5 rounded-xl transition-all cursor-pointer"
               title="Logout"
             >
@@ -96,6 +99,30 @@ const Navbar = () => {
           })}
         </div>
       </div>
+
+      {/* Confirm Sign Out Dialog */}
+      {isConfirmOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/45 backdrop-blur-xs">
+          <div className="bg-[#fdfdf9] border-2 border-sage-gold rounded-3xl p-6 max-w-sm w-full shadow-lg space-y-6 animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="text-xl font-serif font-bold text-[#1F2937] border-b border-sage-gold pb-2">Confirm Sign Out</h3>
+            <p className="text-sm font-medium text-[#374151]">Are you sure you want to sign out?</p>
+            <div className="flex gap-4 justify-end">
+              <button 
+                onClick={() => setIsConfirmOpen(false)}
+                className="px-5 py-2 rounded-xl border border-sage-gold text-[#374151] hover:bg-sage-gold/20 transition-all font-bold cursor-pointer text-xs"
+              >
+                No
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="px-5 py-2 rounded-xl bg-[#800020] text-paper-cream hover:bg-[#990026] transition-all font-bold cursor-pointer text-xs"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

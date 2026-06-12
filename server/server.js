@@ -12,7 +12,7 @@ const { startScheduler } = require('./utils/scheduler');
 
 // Route files
 const authRoutes = require('./routes/authRoutes');
-const capsuleRoutes = require('./routes/capsuleRoutes');
+const psReminderRoutes = require('./routes/psReminderRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 
 // Connect to database
@@ -55,12 +55,12 @@ if (process.env.NODE_ENV === 'development') {
 
 // Basic route
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Digital Time Capsule API' });
+  res.json({ message: 'Welcome to PS Reminder Management System API' });
 });
 
 // Mount routes
 app.use('/api/auth', authRoutes);
-app.use('/api/capsules', capsuleRoutes);
+app.use('/api/capsules', psReminderRoutes);
 app.use('/api/notifications', notificationRoutes);
 
 // Global Error Handler Middleware

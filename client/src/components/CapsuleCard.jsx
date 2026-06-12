@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Lock, ShieldCheck, Mail, Users, Trash2 } from 'lucide-react';
+import { Clock, Lock, Mail, Users, Trash2, Calendar } from 'lucide-react';
 import { formatDistanceToNow, format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
@@ -8,21 +8,33 @@ import { toast } from 'react-hot-toast';
 const CapsuleCard = ({ capsule, onDelete }) => {
   const [timeLeft, setTimeLeft] = useState('');
 
+  // Find next upcoming schedule date
+  const upcomingSchedules = (capsule.schedules || [])
+    .filter(s => !s.emailSent)
+    .map(s => ({ ...s, parsedDate: new Date(s.scheduledDate) }))
+    .sort((a, b) => a.parsedDate - b.parsedDate);
+  
+  const nextSchedule = upcomingSchedules[0];
+  const nextScheduleDate = nextSchedule ? nextSchedule.parsedDate : null;
+
   useEffect(() => {
     const updateTimer = () => {
+      if (!nextScheduleDate) {
+        setTimeLeft('Completed');
+        return;
+      }
       const now = new Date();
-      const unlockDate = new Date(capsule.unlockDate);
-      if (unlockDate <= now) {
-        setTimeLeft('Unlocked');
+      if (nextScheduleDate <= now) {
+        setTimeLeft('Due Now');
       } else {
-        setTimeLeft(formatDistanceToNow(unlockDate, { addSuffix: true }));
+        setTimeLeft(formatDistanceToNow(nextScheduleDate, { addSuffix: true }));
       }
     };
 
     updateTimer();
     const interval = setInterval(updateTimer, 60000);
     return () => clearInterval(interval);
-  }, [capsule.unlockDate]);
+  }, [nextScheduleDate]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -34,28 +46,16 @@ const CapsuleCard = ({ capsule, onDelete }) => {
 
     try {
       await api.delete(`/capsules/${capsule._id}`);
-      toast.success('Capsule deleted successfully');
+      toast.success('PS Reminder deleted successfully');
       if (onDelete) {
         onDelete(capsule._id);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to delete capsule');
+      toast.error(error.response?.data?.message || 'Failed to delete reminder');
     }
   };
 
-  const statusColors = {
-    draft: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
-    sealed: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-500',
-    delivered: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-500',
-  };
-
-  const privacyIcons = {
-    private: Lock,
-    shared: Users,
-    public: ShieldCheck,
-  };
-
-  const PrivacyIcon = privacyIcons[capsule.privacy];
+  const coverImage = 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=800';
 
   return (
     <Link 
@@ -67,9 +67,7 @@ const CapsuleCard = ({ capsule, onDelete }) => {
 
       <div className="relative h-44 overflow-hidden border-b border-sage-gold">
         <img
-          src={capsule.coverImage.includes('photo-1516541196182-6bdb0516ed27')
-            ? 'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800'
-            : capsule.coverImage}
+          src={coverImage}
           alt={capsule.title}
           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700 sepia-[20%] contrast-[95%] brightness-[92%]"
         />
@@ -79,7 +77,7 @@ const CapsuleCard = ({ capsule, onDelete }) => {
         <button
           onClick={handleDelete}
           className="absolute top-4 left-4 p-2 bg-[#fdfdf9]/90 border border-red-500/20 hover:bg-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-350 cursor-pointer z-30"
-          title="Delete Capsule"
+          title="Delete Reminder"
         >
           <Trash2 className="w-4 h-4 text-red-600" />
         </button>
@@ -92,15 +90,15 @@ const CapsuleCard = ({ capsule, onDelete }) => {
             <path d="M 15 45 Q 50 35 85 45" strokeWidth="1" />
             <path d="M 15 52 Q 50 42 85 52" strokeWidth="1" />
             <path d="M 15 59 Q 50 49 85 59" strokeWidth="1" />
-            <text x="50" y="30" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fontWeight="bold" fill="currentColor" stroke="none">TIMECAPSULE</text>
-            <text x="50" y="76" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fill="currentColor" stroke="none">POST RELAY</text>
+            <text x="50" y="30" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fontWeight="bold" fill="currentColor" stroke="none">REMINDER</text>
+            <text x="50" y="76" textAnchor="middle" fontSize="6.5" fontFamily="monospace" fill="currentColor" stroke="none">PS MANAGER</text>
             <text x="50" y="51" textAnchor="middle" fontSize="8" fontFamily="monospace" fontWeight="bold" fill="currentColor" stroke="none">{format(new Date(capsule.createdAt), 'dd.MM.yy')}</text>
           </svg>
         </div>
 
-        {capsule.status === 'sealed' && (
+        {capsule.status === 'draft' && (
           <div className="absolute bottom-4 left-4 p-2 bg-[#fdfdf9]/95 border border-sage-gold rounded-lg z-30">
-            <Lock className="w-4 h-4 text-[#800020]" />
+            <span className="text-[10px] font-bold font-serif uppercase text-amber-600">Draft</span>
           </div>
         )}
       </div>
@@ -109,14 +107,14 @@ const CapsuleCard = ({ capsule, onDelete }) => {
       <div className="p-6 space-y-5 flex-1 flex flex-col justify-between paper-pattern bg-[#fdfaf2]/40">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-deep-forest/50 text-[10px] font-bold font-serif uppercase tracking-widest">
-              <PrivacyIcon className="w-3 h-3 text-ink-green/75" />
-              {capsule.privacy}
+            <div className="flex items-center gap-2 text-[#4B5563] text-[10px] font-bold font-serif uppercase tracking-widest">
+              <Clock className="w-3 h-3 text-ink-green/75" />
+              {capsule.selectedIntervals?.length || 0} intervals
             </div>
             <span className={`rubber-stamp ${
-              capsule.status === 'sealed' ? 'stamp-sealed' : 'stamp-delivered'
+              capsule.status === 'active' ? 'stamp-sealed' : 'stamp-delivered'
             } text-[9px] shadow-sm`}>
-              {capsule.status}
+              {capsule.status === 'active' ? 'Active' : 'Draft'}
             </span>
           </div>
           <h3 className="text-xl font-serif font-bold text-deep-forest tracking-tight leading-tight group-hover:text-ink-green transition-colors duration-300 line-clamp-2">
@@ -126,22 +124,22 @@ const CapsuleCard = ({ capsule, onDelete }) => {
 
         <div className="space-y-4">
           <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2 text-deep-forest/70 font-medium">
-              <Clock className="w-4 h-4 text-ink-green" />
+            <div className="flex items-center gap-2 text-[#374151] font-medium">
+              <Calendar className="w-4 h-4 text-ink-green" />
               {timeLeft}
             </div>
-            <div className="flex items-center gap-2 text-deep-forest/50 font-semibold">
+            <div className="flex items-center gap-2 text-[#374151] font-semibold">
               <Users className="w-4 h-4" />
-              {capsule.recipients?.length || 0}
+              {capsule.recipientEmails?.length || 0}
             </div>
           </div>
 
           <div className="pt-4 border-t border-sage-gold/50 flex items-center justify-between">
-            <div className="text-[10px] font-bold text-deep-forest/40 uppercase tracking-tighter">
-              Unlocks {format(new Date(capsule.unlockDate), 'MMM d, yyyy')}
+            <div className="text-[10px] font-bold text-[#4B5563] uppercase tracking-tighter">
+              Filed {format(new Date(capsule.psFilingDate), 'MMM d, yyyy')}
             </div>
-            <div className="text-[10px] font-bold text-deep-forest/40 uppercase group-hover:text-ink-green transition-colors font-serif">
-              Open &rarr;
+            <div className="text-[10px] font-bold text-[#4B5563] uppercase group-hover:text-ink-green transition-colors font-serif">
+              View &rarr;
             </div>
           </div>
         </div>

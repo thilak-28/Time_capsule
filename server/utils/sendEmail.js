@@ -32,10 +32,13 @@ const sendEmail = async (options) => {
   const axios = require('axios');
   
   try {
+    const senderName = process.env.EMAIL_FROM_NAME || options.senderName || 'LextrAI Research';
+    const senderEmail = process.env.EMAIL_FROM_ADDRESS || process.env.EMAIL_FROM || process.env.SMTP_USER;
+
     const emailData = {
       sender: {
-        name: options.senderName || 'Time Capsule',
-        email: process.env.EMAIL_FROM || process.env.SMTP_USER,
+        name: senderName,
+        email: senderEmail,
       },
       to: [
         {

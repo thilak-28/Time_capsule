@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Clock, Shield, Zap, Heart, ArrowRight, Play } from 'lucide-react';
+import { Clock, Shield, Zap, Calendar, ArrowRight, Play } from 'lucide-react';
 
 const Landing = () => {
   return (
@@ -10,7 +10,7 @@ const Landing = () => {
           <div className="p-2 bg-sage-gold/25 border border-sage-gold/50 rounded-xl">
             <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-ink-green" />
           </div>
-          <span className="text-xl sm:text-2xl font-serif font-bold text-deep-forest tracking-tighter">TimeCapsule</span>
+          <span className="text-xl sm:text-2xl font-serif font-bold text-deep-forest tracking-tighter">PS Reminder Manager</span>
         </div>
         <div className="flex items-center gap-4 sm:gap-6">
           <Link to="/login" className="text-xs sm:text-sm font-bold font-serif text-deep-forest/60 hover:text-deep-forest transition-colors">
@@ -26,16 +26,16 @@ const Landing = () => {
       <section className="container mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-24 sm:pb-32 text-center">
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-sage-gold/25 border border-sage-gold/50 text-ink-green text-[9px] sm:text-[10px] font-bold font-serif uppercase tracking-[0.3em] mb-8 sm:mb-12 stagger-in">
           <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
-          Secure Digital Time Capsule
+          Statutory filing reminder coordinator
         </div>
         <h1 className="text-5xl sm:text-7xl md:text-[100px] font-bold font-serif text-deep-forest mb-6 sm:mb-10 tracking-tight leading-[0.95] sm:leading-[0.9] stagger-in" style={{ animationDelay: '0.1s' }}>
-          Secure Your <br />
+          Never Miss a <br />
           <span className="text-ink-green">
-            Legacy.
+            Filing.
           </span>
         </h1>
         <p className="text-base sm:text-xl text-deep-forest/65 max-w-xl sm:max-w-2xl mx-auto mb-10 sm:mb-16 leading-relaxed font-medium stagger-in" style={{ animationDelay: '0.2s' }}>
-          Safely lock away messages and media to be delivered to your future self, friends, or family at the exact date and time you choose.
+          Schedule automatic recurring reminder intervals for your PS filings. Recipient emails are dispatched automatically on precisely calculated schedule dates.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 stagger-in" style={{ animationDelay: '0.3s' }}>
           <Link to="/register" className="vintage-btn-primary text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 w-full sm:w-auto flex items-center justify-center gap-3 group">
@@ -57,19 +57,19 @@ const Landing = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: "Time Locking",
-              desc: "Atomic-clock synchronization ensures your capsule remains impenetrable until the exact microsecond of arrival.",
+              title: "Interval Schedules",
+              desc: "Configure 2, 4, 6, 8, 10, or 12-month reminder intervals. The system automatically computes and tracks all upcoming delivery dates.",
               icon: Clock,
             },
             {
-              title: "AES-256 Vault",
-              desc: "Military-grade encryption protocols safeguard your data. Your legacy is protected by the highest standards of digital security.",
+              title: "Secure Delivery",
+              desc: "Encrypted scheduler engine manages dates securely. Reminders are dispatched directly to designated recipient inboxes.",
               icon: Shield,
             },
             {
-              title: "Endless Horizons",
-              desc: "Perfect for generational milestones. Speak to your children, your successors, or your future self across decades.",
-              icon: Heart,
+              title: "Statutory Filing Tracker",
+              desc: "Keep records of all filed PS records, title coordinates, and dispatch history. Built-in dashboard charts trace email activity.",
+              icon: Calendar,
             }
           ].map((feature, i) => (
             <div key={i} className="vintage-card p-10 stagger-in" style={{ animationDelay: `${0.4 + i * 0.1}s` }}>
@@ -85,7 +85,7 @@ const Landing = () => {
 
       {/* Footer */}
       <footer className="container mx-auto px-6 py-16 border-t border-sage-gold text-center stagger-in">
-        <p className="text-deep-forest/40 text-[10px] font-bold font-serif uppercase tracking-[0.4em]">© 2026 TIMECAPSULE PROTOCOL • Preserving Memories</p>
+        <p className="text-deep-forest/40 text-[10px] font-bold font-serif uppercase tracking-[0.4em]">© 2026 PS REMINDER MANAGER • AUTOMATION PROTOCOL</p>
       </footer>
     </div>
   );
