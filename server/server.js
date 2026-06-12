@@ -72,11 +72,20 @@ app.use('/api/notifications', notificationRoutes);
 const errorHandler = require('./middleware/errorMiddleware');
 app.use(errorHandler);
 
-// Start capsule delivery scheduler
-startScheduler();
+// Start cron scheduler only in local development
+// On Vercel, the /api/cron endpoint is triggered by Vercel Cron Jobs instead
+if (process.env.NODE_ENV !== 'production') {
+  startScheduler();
+}
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
+// In local dev, start the server normally
+// On Vercel, the app is exported as a serverless function
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+  });
+}
+
+module.exports = app;
