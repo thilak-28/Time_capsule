@@ -14,7 +14,11 @@ const AdminUserView = () => {
     const fetch = async () => {
       try {
         const { data: res } = await api.get(`/admin/users/${id}`);
-        setData(res.data);
+        const d = res.data;
+        // Sort by filing date ascending (oldest first)
+        d.psReminders.sort((a, b) => new Date(a.psFilingDate) - new Date(b.psFilingDate));
+        d.csReminders.sort((a, b) => new Date(a.csFilingDate) - new Date(b.csFilingDate));
+        setData(d);
       } catch (err) {
         console.error(err);
       } finally {
