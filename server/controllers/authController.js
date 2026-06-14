@@ -157,6 +157,7 @@ const sendTokenResponse = (user, statusCode, res) => {
         name: user.name,
         email: user.email,
         avatar: user.avatar,
+        isAdmin: user.isAdmin || false,
       },
     });
 };
