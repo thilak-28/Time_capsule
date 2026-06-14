@@ -33,12 +33,13 @@ exports.setupAdmin = async (req, res) => {
 // @access  Admin only
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({ isAdmin: false }).select('-password').lean();
+    // Use $ne: true to include users created before isAdmin field was added
+    const users = await User.find({ isAdmin: { $ne: true } }).select('-password').lean();
 
     const usersWithCounts = await Promise.all(users.map(async (user) => {
       const psCount = await PSReminder.countDocuments({ creator: user._id });
       const csCount = await CSReminder.countDocuments({ creator: user._id });
-      const psSentCount = await ReminderSchedule.countDocuments({ emailSent: true });
+      const psSentCount = await ReminderSchedule.countDocuments({ reminderId: { $in: [] } });
       return { ...user, psCount, csCount, psSentCount };
     }));
 
