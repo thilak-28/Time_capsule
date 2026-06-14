@@ -98,3 +98,35 @@ exports.getUserDashboard = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// @desc    Delete a user and all their data
+// @route   DELETE /api/admin/users/:id
+// @access  Admin only
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (user.isAdmin) return res.status(400).json({ message: 'Cannot delete admin account' });
+
+    // Delete all PS reminders + schedules
+    const psReminders = await PSReminder.find({ creator: req.params.id });
+    const psIds = psReminders.map(r => r._id);
+    await ReminderSchedule.deleteMany({ reminderId: { $in: psIds } });
+    await PSReminder.deleteMany({ creator: req.params.id });
+
+    // Delete all CS reminders + schedules
+    const csReminders = await CSReminder.find({ creator: req.params.id });
+    const csIds = csReminders.map(r => r._id);
+    await CSReminderSchedule.deleteMany({ reminderId: { $in: csIds } });
+    await CSReminder.deleteMany({ creator: req.params.id });
+
+    // Delete notifications and user
+    const Notification = require('../models/Notification');
+    await Notification.deleteMany({ userId: req.params.id });
+    await user.deleteOne();
+
+    res.status(200).json({ success: true, message: `User '${user.name}' and all their data deleted` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

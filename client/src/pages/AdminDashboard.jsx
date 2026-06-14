@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-import { Users, FileText, Mail, ChevronRight, Shield, Search, LogOut } from 'lucide-react';
+import { Users, FileText, Mail, ChevronRight, Shield, Search, LogOut, Trash2 } from 'lucide-react';
 import useAuthStore from '../store/authStore';
+import toast from 'react-hot-toast';
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
   const navigate = useNavigate();
   const { logout } = useAuthStore();
 
@@ -33,6 +35,21 @@ const AdminDashboard = () => {
   const handleLogout = async () => {
     await logout();
     navigate('/login');
+  };
+
+  const handleDelete = async (e, user) => {
+    e.stopPropagation(); // Don't navigate to user detail
+    if (!window.confirm(`Delete user "${user.name}" and ALL their reminders? This cannot be undone.`)) return;
+    setDeletingId(user._id);
+    try {
+      await api.delete(`/admin/users/${user._id}`);
+      setUsers(prev => prev.filter(u => u._id !== user._id));
+      toast.success(`User "${user.name}" deleted successfully`);
+    } catch (err) {
+      toast.error('Failed to delete user');
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   return (
@@ -113,7 +130,7 @@ const AdminDashboard = () => {
                     <div className="text-slate-400 text-sm">{user.email}</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3">
                   <div className="hidden sm:flex gap-6 text-sm">
                     <div className="text-center">
                       <div className="text-white font-bold">{user.psCount || 0}</div>
@@ -124,6 +141,14 @@ const AdminDashboard = () => {
                       <div className="text-slate-500 text-xs">CS</div>
                     </div>
                   </div>
+                  <button
+                    onClick={(e) => handleDelete(e, user)}
+                    disabled={deletingId === user._id}
+                    className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/30 border border-red-500/20 hover:border-red-500/50 text-red-400 transition-all cursor-pointer disabled:opacity-50"
+                    title="Delete user"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                   <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-indigo-400 transition-colors" />
                 </div>
               </button>
