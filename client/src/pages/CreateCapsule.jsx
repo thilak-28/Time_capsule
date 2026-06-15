@@ -131,7 +131,7 @@ const CreateCapsule = () => {
     }
   };
 
-  const intervalOptions = [2, 4, 6, 8, 10, 12, 14, 16];
+  const intervalOptions = [2, 4, 6, 8, 10, 12, 14, 16, 17];
 
   return (
     <div className="max-w-6xl mx-auto space-y-10 pb-24 stagger-in px-4 sm:px-6 lg:px-8">
