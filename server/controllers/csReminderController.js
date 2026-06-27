@@ -13,6 +13,9 @@ const generateSchedules = async (reminder) => {
   for (const intervalDays of reminder.selectedIntervals) {
     const scheduledDate = new Date(filingDate);
     scheduledDate.setDate(scheduledDate.getDate() + intervalDays);
+    // Normalize to midnight UTC so the Vercel cron (00:00 UTC = 5:30 AM IST)
+    // always picks up the schedule on the correct day
+    scheduledDate.setUTCHours(0, 0, 0, 0);
 
     schedules.push({
       reminderId: reminder._id,
