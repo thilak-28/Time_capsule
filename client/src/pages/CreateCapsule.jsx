@@ -50,6 +50,15 @@ const CreateCapsule = () => {
     }
   };
 
+  // Converts local date picker value to YYYY-MM-DD string (timezone-safe)
+  const toDateString = (date) => {
+    const d = new Date(date);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
   const saveDraft = async () => {
     if (!formData.title) return toast.error('PS Title is required');
     setLoading(true);
@@ -57,7 +66,7 @@ const CreateCapsule = () => {
     const payload = {
       title: formData.title,
       description: formData.description,
-      psFilingDate: formData.psFilingDate,
+      psFilingDate: toDateString(formData.psFilingDate),
       recipientEmails: formData.recipientEmails.filter(email => email.trim() !== ''),
       selectedIntervals: formData.selectedIntervals,
       status: 'draft'
@@ -106,7 +115,7 @@ const CreateCapsule = () => {
     const payload = {
       title: formData.title,
       description: formData.description,
-      psFilingDate: formData.psFilingDate,
+      psFilingDate: toDateString(formData.psFilingDate),
       recipientEmails: validEmails,
       selectedIntervals: formData.selectedIntervals,
       status: 'active'

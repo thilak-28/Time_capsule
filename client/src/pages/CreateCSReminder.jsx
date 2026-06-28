@@ -44,6 +44,15 @@ const CreateCSReminder = () => {
     }
   };
 
+  // Converts local date picker value to YYYY-MM-DD string (timezone-safe)
+  const toDateString = (date) => {
+    const d = new Date(date);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
   const saveDraft = async () => {
     if (!formData.title) return toast.error('CS Title is required');
     setLoading(true);
@@ -51,7 +60,7 @@ const CreateCSReminder = () => {
     const payload = {
       title: formData.title,
       description: formData.description,
-      csFilingDate: formData.csFilingDate,
+      csFilingDate: toDateString(formData.csFilingDate),
       recipientEmails: formData.recipientEmails.filter(e => e.trim() !== ''),
       selectedIntervals: formData.selectedIntervals,
       status: 'draft',
@@ -95,7 +104,7 @@ const CreateCSReminder = () => {
     const payload = {
       title: formData.title,
       description: formData.description,
-      csFilingDate: formData.csFilingDate,
+      csFilingDate: toDateString(formData.csFilingDate),
       recipientEmails: validEmails,
       selectedIntervals: formData.selectedIntervals,
       status: 'active',
