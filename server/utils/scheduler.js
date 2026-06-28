@@ -34,7 +34,8 @@ const scanAndSendReminders = async () => {
         day: 'numeric', month: 'long', year: 'numeric'
       });
 
-      // Send all recipient emails in parallel
+      // Send all recipient emails and track success
+      let atLeastOneEmailSent = false;
       await Promise.all(reminder.recipientEmails.map(async (email) => {
         try {
           await sendEmail({
@@ -72,25 +73,32 @@ const scanAndSendReminders = async () => {
               </div>
             `
           });
+          atLeastOneEmailSent = true;
+          console.log(`✅ Email sent to ${email} for reminder "${reminder.title}"`);
         } catch (emailErr) {
-          console.error(`Failed to send email to ${email}:`, emailErr.message);
+          console.error(`❌ Failed to send email to ${email}:`, emailErr.message);
         }
       }));
 
-      // Mark schedule as completed
-      schedule.emailSent = true;
-      schedule.sentAt = new Date();
-      schedule.status = 'completed';
-      await schedule.save();
+      // Only mark completed if at least one email was actually sent
+      // If all emails failed, leave emailSent = false so next cron retries
+      if (atLeastOneEmailSent) {
+        schedule.emailSent = true;
+        schedule.sentAt = new Date();
+        schedule.status = 'completed';
+        await schedule.save();
 
-      await Notification.create({
-        userId: reminder.creator._id,
-        message: `PS Reminder "${reminder.title}" notification (Interval: ${schedule.intervalMonths} months) has been sent to recipients.`,
-        type: 'reminder',
-        capsuleId: reminder._id
-      });
+        await Notification.create({
+          userId: reminder.creator._id,
+          message: `PS Reminder "${reminder.title}" notification (Interval: ${schedule.intervalMonths} months) has been sent to recipients.`,
+          type: 'reminder',
+          capsuleId: reminder._id
+        });
 
-      console.log(`Schedule completed successfully for reminder "${reminder.title}"`);
+        console.log(`✅ Schedule completed for reminder "${reminder.title}"`);
+      } else {
+        console.error(`❌ All emails failed for reminder "${reminder.title}". Schedule NOT marked completed — will retry on next cron.`);
+      }
     }));
 
     if (schedules.length > 0) {
@@ -129,7 +137,8 @@ const scanAndSendCSReminders = async () => {
         day: 'numeric', month: 'long', year: 'numeric',
       });
 
-      // Send all recipient emails in parallel
+      // Send all recipient emails and track success
+      let atLeastOneEmailSent = false;
       await Promise.all(reminder.recipientEmails.map(async (email) => {
         try {
           await sendEmail({
@@ -167,24 +176,32 @@ const scanAndSendCSReminders = async () => {
               </div>
             `,
           });
+          atLeastOneEmailSent = true;
+          console.log(`✅ CS Email sent to ${email} for reminder "${reminder.title}"`);
         } catch (emailErr) {
-          console.error(`Failed to send CS email to ${email}:`, emailErr.message);
+          console.error(`❌ Failed to send CS email to ${email}:`, emailErr.message);
         }
       }));
 
-      schedule.emailSent = true;
-      schedule.sentAt = new Date();
-      schedule.status = 'completed';
-      await schedule.save();
+      // Only mark completed if at least one email was actually sent
+      // If all emails failed, leave emailSent = false so next cron retries
+      if (atLeastOneEmailSent) {
+        schedule.emailSent = true;
+        schedule.sentAt = new Date();
+        schedule.status = 'completed';
+        await schedule.save();
 
-      await Notification.create({
-        userId: reminder.creator._id,
-        message: `CS Reminder "${reminder.title}" notification (Interval: ${schedule.intervalDays} days) has been sent to recipients.`,
-        type: 'reminder',
-        capsuleId: reminder._id,
-      });
+        await Notification.create({
+          userId: reminder.creator._id,
+          message: `CS Reminder "${reminder.title}" notification (Interval: ${schedule.intervalDays} days) has been sent to recipients.`,
+          type: 'reminder',
+          capsuleId: reminder._id,
+        });
 
-      console.log(`CS Schedule completed for reminder "${reminder.title}"`);
+        console.log(`✅ CS Schedule completed for reminder "${reminder.title}"`);
+      } else {
+        console.error(`❌ All CS emails failed for reminder "${reminder.title}". Schedule NOT marked completed — will retry on next cron.`);
+      }
     }));
 
     if (schedules.length > 0) {
